@@ -1,0 +1,3136 @@
+#include <iostream>
+#include <string>
+#include "Do_Hoa.h"
+#include<string>
+#include <fstream>
+#include<mmsystem.h>
+using namespace std;
+#include<thread>
+#include<mutex>
+
+mutex m;
+
+// ================= RAN =================
+int sl = 4;
+int check = 2;
+int Diem = 0;
+int speed = 100;
+// ========= in tro ============
+void Khoi_Tao_Ran_Intro(int toadox[], int toadoy[]);
+void Ve_Ran(int toadox[], int toadoy[]);
+void Xoa_Du_Lieu_Cu(int toadox[], int todoy[]);
+void Xu_Li_Ran_InTro(int toadox[], int toadoy[], int x, int y);
+void them(int a[], int x);
+void xoa(int a[], int vt);
+void Tao_InTro();
+void Xu_Li_Ran_Cham_Tuong_InTro(int toadox[], int toadoy[], int &x, int &y);
+void Don_Rac_Ran();
+//============== GAME 1 =============
+void Ve_Tuong_Tren();
+void Ve_Tuong_Duoi();
+void Ve_Tuong_Trai();
+void Ve_Tuong_Phai();
+void Ve_Tuong();
+void Khoi_tao_ran(int toadox[], int toadoy[]);
+void Ve_Ran(int toadox[], int todoy[]);
+void Xoa_Du_Lieu_Cu(int toadox[], int todoy[]);
+void Xu_Li_Ran(int toadox[], int toadoy[], int x, int y, int &xqua, int &yqua);
+bool kt_ran_cham_tuong(int x0, int y0);
+bool kt_ran_can_duoi(int toadox[], int toadoy[]);
+bool kt_ran(int toadox[], int toadoy[]);
+void tao_qua(int &xqua, int &yqua, int toadox[], int toadoy[]);
+bool kt_ran_de_qua(int toadox[], int toadoy[], int xqua, int yqua);
+bool kt_ran_an_qua(int xqua, int yqua, int x0, int y0);
+void Ham_Toc_Do_Cua_Ran();
+void game1();
+
+// =============== GAME 2 ===============
+
+void Ve_Tuong_Tren_Mode2();
+void Ve_Tuong_Duoi_Mode2();
+void Ve_Tuong_Trai_Mode2();
+void Ve_Tuong_Phai_Mode2();
+void Ve_Tuong_Mode2();
+void Khoi_tao_ran_Mode2(int toadox[], int toadoy[]);
+void Ve_Ran_Mode2(int toadox[], int todoy[]);
+
+void ran_cham_tuong_Mode2(int toadox[], int toadoy[], int &x, int &y);
+bool kt_ran_can_duoi_Mode2(int toadox[], int toadoy[]);
+void tao_qua_Mode2(int &xqua, int &yqua, int toadox[], int toadoy[]);
+void Xu_Li_Ran_Mode2(int toadox[], int toadoy[], int x, int y, int &xqua, int &yqua);
+void game_2();
+
+// =============== GAME 3 ===============
+
+void Ve_Tuong_Tren_Mode3();
+void Ve_Tuong_Duoi_Mode3();
+void Ve_Tuong_Trai_Mode3();
+void Ve_Tuong_Phai_Mode3();
+void Ve_Tuong_Mode3();
+void Khoi_tao_ran_Mode3(int toadox[], int toadoy[]);
+void Ve_Ran_Mode3(int toadox[], int todoy[]);
+
+void Xu_Li_Ran_Mode3(int toadox[], int toadoy[], int &x, int &y, int &xqua, int &yqua, int &xcong, int &ycong);
+
+
+void tao_qua_Mode3(int &xqua, int &yqua, int toadox[], int toadoy[]);
+bool kt_ran_de_qua_Mode3(int toadox[], int toadoy[], int xqua, int yqua);
+bool kt_ran_an_qua_Mode3(int xqua, int yqua, int x0, int y0);
+
+void Tao_Cong_Mode3(int toadox[], int toadoy[], int &xcong, int &ycong, int &xqua, int &yqua);
+bool kt_ran_an_cong_Mode3(int xcong, int ycong, int x0, int y0);
+bool kt_ran_de_cong_Mode3(int toadox[], int toadoy[], int xcong, int ycong);
+bool kt_qua_de_cong_Mode3(int xqua, int yqua, int xcong, int ycong);
+void Xu_Li_Ran_2_Mode3(int toadox[], int toadoy[], int &xqua, int &yqua, int &xcong, int &ycong, int &x, int &y);
+void game3();
+
+// ====================== GAME 4 =====================
+
+int toadox_Mode4[100], toadoy_Mode4[100]; // toáº¡ Ä‘á»™ ráº¯n
+int x_Mode4 = 50, y_Mode4 = 15; // toáº¡ Ä‘á»™ ban Ä‘áº§u ráº¯n 
+
+void Khoi_tao_ran_Mode4(int toadox[], int toadoy[]);
+void Ve_Ran_Mode4(int toadox[], int todoy[]);
+void Xoa_Du_Lieu_Cu_Mode4(int toadox[], int todoy[]);
+void Xu_Li_Ran_Mode4(int toadox[], int toadoy[], int x, int y, int &toadoxBong, int &toadoyBong);
+void them_Mode4(int a[], int x);
+void xoa_Mode4(int a[], int vt);
+bool kt_ran_cham_tuong_Mode4(int x0, int y0);
+bool kt_ran_can_duoi_Mode4(int toadox[], int toadoy[]);
+bool kt_ran_Mode4(int toadox[], int toadoy[]);
+void Ran_Mode4();
+
+// =================== BUBLE ===================
+int toadoxBong = 6, toadoyBong = 6;
+int toadoxcuBong = -9999, toadoycuBong = -9999;
+int check1 = 0;
+int check2 = 3;
+
+int m1;
+int m2;
+void Draw_Ball(int toadoxBong, int toadoyBong);
+bool kt_ran_de_bong_Mode4(int toadoxBong, int toadoyBong, int toadox[], int toadoy[]);
+void Tao_Bong_Mode4(int &toadoxBong, int &toadoyBong, int toadox[], int toadoy[]);
+bool kt_ran_an_bong_Mode4(int toadoxBong, int toadoyBong, int x0, int y0);
+// ================= WALL ==================
+void Ve_Tuong_Mode4();
+void Ve_Tuong_Tren_Mode4();
+void Ve_Tuong_Duoi_Mode4();
+void Ve_Tuong_Trai_Mode4();
+void Ve_Tuong_Phai_Mode4();
+void Bubble_main();
+void mode_bong_bay(); // code chinh
+
+// ================= RET =================
+int sl_dot = 5;
+
+void Ve_Ret(int toadoRetX[], int toadoRetY[], int toadoChanTraiX[], int toadoChanTraiY[], int toadoChanPhaiX[], int toadoChanPhaiY[]);
+void Khoi_Tao_Ret(int toadoRetX[], int toadoRetY[], int toadoChanTraiX[], int toadoChanTraiY[], int toadoChanPhaiX[], int toadoChanPhaiY[]);
+void Xu_Li_Ret_InTro(int toadoRetX[], int toadoRetY[], int toadoChanTraiX[], int toadoChanTraiY[], int toadoChanPhaiX[], int toadoChanPhaiY[], int x, int y);
+void Xoa_Du_Lieu_Cu_Ret(int toadoChanTraiX[], int toadoChanTraiY[]);
+void them_Ret(int a[], int x);
+void xoa_Ret(int a[], int vt);
+void xu_li_Ret_Cham_Tuong_inTro(int toadoRetX[], int toadoRetY[], int toadoChanTraiX[], int toadoChanTraiY[], int toadoChanPhaiX[], int toadoChanPhaiY[], int &x, int &y);
+void Intro_Ret();
+void Don_Rac_Ret();
+
+// ================= GAME 5 ======================
+
+int timeSinhTon_Mode5 = 150; // thời gian sinh tồn trong thời gian đó mà không ăn quả giảm điểm
+bool gameover_Mode5 = false; // ket thuc tro choi
+int toadox_Mode5[100], toadoy_Mode5[100]; // toạ độ rắn
+int xqua_Mode5 = 0, yqua_Mode5 = 0; // toạ đổ quả
+int xhop_Mode5 = 0, yhop_Mode5 = 0; // toạ độ hộp bí ẩn
+int modeSpeed_Mode5 = 0;
+int x_Mode5 = 50, y_Mode5 = 13; // toạ độ ban đầu của rắn
+int sl_Mode5 = 4;
+int Diem_Mode5 = 1;
+int demHop_Mode5 = 0;
+int speed_Mode5 = 110; // toc do ran
+int time1_Mode5 = 0;
+int time5_Mode5 = 0; // di xuyen vat can
+int check_Mode5 = 2;
+int s_Mode5; // roam hom bi an
+int time6_Mode5 = 0; // dao nguoc phim
+int mauRan_Mode5 = 7;
+void Ve_Tuong_Tren_Mode5();
+void Ve_Tuong_Duoi_Mode5();
+void Ve_Tuong_Trai_Mode5();
+void Ve_Tuong_Phai_Mode5();
+void Ve_Vat_Can1_Mode5();
+void Ve_Vat_Can2_Mode5();
+void Ve_Tuong_Mode5();
+void Khoi_tao_ran_Mode5(int toadox[], int toadoy[]);
+void Ve_Ran_Mode5(int toadox[], int todoy[]);
+void Xoa_Du_Lieu_Cu_Mode5(int toadox[], int todoy[]);
+void Xu_Li_Ran_Mode5(int toadox[], int toadoy[], int x, int y, int &xqua, int &yqua);
+void them_Mode5(int a[], int x);
+void xoa_Mode5(int a[], int vt);
+bool kt_ran_cham_tuong_Mode5(int x0, int y0);
+bool kt_ran_can_duoi_Mode5(int toadox[], int toadoy[]);
+bool kt_ran_Mode5(int toadox[], int toadoy[]);
+void tao_qua_Mode5(int &xqua, int &yqua, int toadox[], int toadoy[]);
+bool kt_ran_de_qua_Mode5(int toadox[], int toadoy[], int xqua, int yqua);
+bool kt_ran_an_qua_Mode5(int xqua, int yqua, int x0, int y0);
+bool kt_ran_de_hop_Mode5(int toadox[], int toadoy[], int xhop, int yhop);
+bool kt_qua_de_hop_Mode5(int xhop, int yhop, int xqua, int yqua);
+void tao_hop_bi_an_Mode5(int toadox[], int toadoy[], int &xhop, int &yhop, int &xqua, int &yqua);
+bool kt_ran_an_hop_Mode5(int xhop, int yhop, int x0, int y0);
+void Xu_Li_Ran_2_Mode5(int toadox[], int toadoy[], int &xqua, int &yqua, int &xhop, int &yhop);
+void Xoa_Du_Lieu_Cu_2_Mode5(int toadox_Mode5, int todoy_Mode5);
+bool kt_vat_can_de_qua_Mode5(int xqua, int yqua);
+bool kt_vat_can_de_hop_Mode5(int xhop, int yhop);
+bool kt_ran_cham_vat_can_Mode5(int x0, int y0);
+void Ham_Toc_Do_Cua_Ran_Mode5(int speed);
+
+void ran_di_xuyen_vat_can_Mode5(int toadox[], int toadoy[], int &x, int &y);
+void run_ran_Mode5(); // hàm chính rắn
+
+// =================== RET GAME  5 ================
+int sl_dot_Mode5 = 5;
+int toadoRetX_Mode5[100], toadoRetY_Mode5[100];
+int toadoChanTraiX_Mode5[100], toadoChanTraiY_Mode5[100];
+int toadoChanPhaiX_Mode5[100], toadoChanPhaiY_Mode5[100];
+int x_ret_Mode5 = 20, y_ret_Mode5 = 30; // toạ độ ban đầu của rết
+
+int doiHuongRet;
+
+void Ve_Ret_Mode5(int toadoRetX[], int toadoRetY[], int toadoChanTraiX[], int toadoChanTraiY[], int toadoChanPhaiX[], int toadoChanPhaiY[]);
+void Khoi_Tao_Ret_Mode5(int toadoRetX[], int toadoRetY[], int toadoChanTraiX[], int toadoChanTraiY[], int toadoChanPhaiX[], int toadoChanPhaiY[]);
+void Xu_Li_Ret_InTro_Mode5(int toadoRetX[], int toadoRetY[], int toadoChanTraiX[], int toadoChanTraiY[], int toadoChanPhaiX[], int toadoChanPhaiY[], int x, int y);
+void Xoa_Du_Lieu_Cu_Ret_Mode5(int toadoChanTraiX[], int toadoChanTraiY[]);
+void them_Ret_Mode5(int a[], int x);
+void xoa_Ret_Mode5(int a[], int vt);
+void xu_li_Ret_Cham_Tuong_inTro_Mode5(int toadoRetX[], int toadoRetY[], int toadoChanTraiX[], int toadoChanTraiY[], int toadoChanPhaiX[], int toadoChanPhaiY[], int &x, int &y);
+void Intro_Ret_Mode5(); // hàm chính rết
+void Don_Rac_Ret_Mode5();
+bool kt_ret_de_qua_Mode5(int xqua_Mode5, int yqua_Mode5);
+bool kt_ret_de_hop_Mode5(int xhop_Mode5, int yhop_Mode5);
+bool kt_ret_cham_ran_Mode5(int toadox[], int toadoy[], int toadoRetX[], int toadoRetY[], int toadoChanTraiX[], int toadoChanTraiY[], int toadoChanPhaiX[], int toadoChanPhaiY[]);
+void game5();
+
+// ================ MENU ===============
+void Tao_Chu();
+void Thanh_Sang(int ViTriSang, int &xcu, int &ycu);
+void tao_menu();
+void Mo_File_Anh_Ran();
+void Animation_intro();
+void Name_Game();
+void Mo_File_High_Score();
+void Mo_File_About();
+
+// ======= MENU 2 =======
+void Tao_Chu_2();
+void Thanh_Sang_2(int ViTriSang, int &xcu, int &ycu);
+void tao_menu_2();
+void Mo_File_Menu_2();
+
+int main()
+{
+	thread ran(Tao_InTro);
+	thread ret(Intro_Ret);
+
+	ran.join();
+	ret.join();
+	ClearScreen();
+	
+
+	Animation_intro();
+	return 0;
+	
+}
+// ================== MENU ==================
+void Name_Game()
+{
+	ifstream file;
+	file.open("abc.txt", ios_base::in);
+	string line;
+	while (getline(file, line))
+	{
+		cout << line << endl;
+		Sleep(30);
+	}
+	file.close();
+}
+void Animation_intro() // menu chính 
+{
+	SetColor(12);
+	Name_Game();
+	Tao_Chu();
+	int ViTriSang = 0;
+	int xcu = -9999, ycu = -9999;
+	Thanh_Sang(ViTriSang, xcu, ycu);
+	bool kt = true;
+
+	ShowCur(0);
+	gotoXY(100, 10);
+	SetColor(10);
+	Mo_File_Anh_Ran();
+	PlaySound(TEXT("Saxophone despacito.wav"), NULL, SND_ASYNC);
+	while (TRUE)
+	{
+		int mau = rand() % (15 - 1 + 1) + 1;
+		
+		SetColor(mau);
+		gotoXY(30, 16);
+		cout << "@";
+		gotoXY(32, 16);
+		cout << "@";
+		gotoXY(48, 16);
+		cout << ".";
+		gotoXY(61, 16);
+		cout << "__";
+
+		gotoXY(48, 17);
+		cout << "|`.    @|   |  |";
+
+		gotoXY(48, 18);
+		cout << "| |`.   |   |  |";
+		gotoXY(70, 18);
+		cout << char(3);
+		gotoXY(74, 18);
+		cout << char(3);
+		gotoXY(47, 19);
+		cout << "@| | |   |, @| @|";
+		gotoXY(49, 20);
+		cout << "@| |   '";
+		gotoXY(51, 21);
+		cout << "@|";
+
+		gotoXY(80, 20);
+		cout << ",~";
+		gotoXY(80, 21);
+		cout << "|";
+		gotoXY(80, 22);
+		cout << "|";
+		gotoXY(79, 23);
+		cout << "@'";
+
+		if (kt == true)
+		{
+			Thanh_Sang(ViTriSang, xcu, ycu);
+			kt = false;
+		}
+		if (_kbhit())
+		{
+			char c = _getch();
+			if (c == -32)
+			{
+				kt = true;
+				c = _getch();
+				if (c == 72)
+				{
+					ViTriSang--;
+				}
+				else if (c == 80)
+				{
+					ViTriSang++;
+				}
+			}
+			else if (c == 13)
+			{
+				if (ViTriSang == 3)
+				{
+					break;
+					return;
+				}
+				else if (ViTriSang == 1)
+				{
+					PlaySound(NULL, NULL, SND_ASYNC);
+					ClearScreen();
+					while (!_kbhit())
+					{
+						gotoXY(0, 0);
+						Mo_File_High_Score();
+					}
+					ClearScreen();
+					Animation_intro();
+				}
+				else if (ViTriSang == 2)
+				{
+					PlaySound(NULL, NULL, SND_ASYNC);
+					ClearScreen();
+					while (!_kbhit())
+					{
+						gotoXY(0, 0);
+						SetColor(7);
+						Mo_File_About();
+					}
+					ClearScreen();
+					Animation_intro();
+				}
+				else if (ViTriSang == 0)
+				{
+					PlaySound(NULL, NULL, SND_ASYNC);
+					ClearScreen();
+					SetColor(12);
+					Mo_File_Menu_2();
+					tao_menu_2();
+
+					ClearScreen();
+					ViTriSang = 0;
+					Animation_intro();
+				}
+				
+			}
+			if (c == 27)
+			{
+				break;
+			}
+		}
+		if (ViTriSang == 4)
+		{
+			ViTriSang = 0;
+		}
+		if (ViTriSang == -1)
+		{
+			ViTriSang = 3;
+		}
+		
+		Sleep(100);
+	}
+}
+void Mo_File_High_Score()
+{
+	ifstream file;
+	file.open("high_score.txt", ios_base::in);
+	string line;
+	while (getline(file, line))
+	{
+		cout << line << endl;
+		Sleep(30);
+	}
+	file.close();
+}
+void Mo_File_About()
+{
+	ifstream file;
+	file.open("about.txt", ios_base::in);
+	string line;
+	while (getline(file, line))
+	{
+		cout << line << endl;
+		Sleep(30);
+	}
+	file.close();
+}
+void tao_menu()
+{
+	ShowCur(0);
+	Tao_Chu();
+	int ViTriSang = 0;
+	int xcu = -9999, ycu = -9999;
+	Thanh_Sang(ViTriSang, xcu, ycu);
+	bool kt = true;
+	while (TRUE)
+	{
+		if (kt == true)
+		{
+			Thanh_Sang(ViTriSang, xcu, ycu);
+			kt = false;
+		}
+		if (_kbhit())
+		{
+			char c = _getch();
+			if (c == -32)
+			{
+				kt = true;
+				c = _getch();
+				if (c == 72)
+				{
+					ViTriSang--;
+				}
+				else if (c == 80)
+				{
+					ViTriSang++;
+				}
+			}
+		}
+		if (ViTriSang == 4)
+		{
+			ViTriSang = 0;
+		}
+		if (ViTriSang == -1)
+		{
+			ViTriSang = 3;
+		}
+	}
+
+}
+void Tao_Chu()
+{
+	SetColor(7);
+	gotoXY(47, 25);
+	cout << "START";
+	gotoXY(47, 26);
+	cout << "HIGH SCORES";
+	gotoXY(47, 27);
+	cout << "ABOUT";
+	gotoXY(47, 28);
+	cout << "QUIT";
+}
+void Thanh_Sang(int ViTriSang, int &xcu, int &ycu)
+{
+	if (ViTriSang == 0)
+	{
+		gotoXY(xcu, ycu);
+		cout << " ";
+		SetColor(7);
+		Tao_Chu();
+		gotoXY(47, 25);
+		SetColor(5);
+		cout << "START";
+		gotoXY(45, 25);
+		cout << char(16);
+		xcu = 45, ycu = 25;
+	}
+	else if (ViTriSang == 1)
+	{
+		gotoXY(xcu, ycu);
+		cout << " ";
+		SetColor(7);
+		Tao_Chu();
+		gotoXY(47, 26);
+		SetColor(5);
+		cout << "HIGH SCORES";
+		gotoXY(45, 26);
+		cout << char(16);
+		xcu = 45, ycu = 26;
+	}
+	else if (ViTriSang == 2)
+	{
+		gotoXY(xcu, ycu);
+		cout << " ";
+		SetColor(7);
+		Tao_Chu();
+		gotoXY(47, 27);
+		SetColor(5);
+		cout << "ABOUT";
+		gotoXY(45, 27);
+		cout << char(16);
+		xcu = 45, ycu = 27;
+	}
+	else if (ViTriSang == 3)
+	{
+		gotoXY(xcu, ycu);
+		cout << " ";
+		SetColor(7);
+		Tao_Chu();
+		gotoXY(47, 28);
+		SetColor(5);
+		cout << "QUIT";
+		gotoXY(45, 28);
+		cout << char(16);
+		xcu = 45, ycu = 28;
+	}
+}
+void Mo_File_Anh_Ran()
+{
+	ifstream file;
+	file.open("ran.txt", ios_base::in);
+	string line;
+	while (getline(file, line))
+	{
+		cout << line << endl;
+		Sleep(30);
+	}
+	file.close();
+}
+
+// ======================= MENU 2 =======================
+
+void tao_menu_2()
+{
+	ShowCur(0);
+	Tao_Chu_2();
+	int ViTriSang_2 = 0;
+	int xcu = -9999, ycu = -9999;
+	Thanh_Sang_2(ViTriSang_2, xcu, ycu);
+	bool kt = true;
+	while (TRUE)
+	{
+		if (kt == true)
+		{
+			Thanh_Sang_2(ViTriSang_2, xcu, ycu);
+			kt = false;
+		}
+		if (_kbhit())
+		{
+			char c = _getch();
+			if (c == -32)
+			{
+				kt = true;
+				c = _getch();
+				if (c == 72)
+				{
+					ViTriSang_2--;
+				}
+				else if (c == 80)
+				{
+					ViTriSang_2++;
+				}
+			}
+			else if (c == 13)
+			{
+				if (ViTriSang_2 == 5)
+				{
+					ViTriSang_2 = 0;
+					break;
+					
+				}
+				if (ViTriSang_2 == 0)
+				{
+					ClearScreen();
+					game1();
+					sl = 4;
+					check = 2;
+					Diem = 0;
+					speed = 100;
+					ViTriSang_2 = 0;
+					break;
+				}
+				if(ViTriSang_2 == 1)
+				{
+					ClearScreen();
+					game_2();
+					sl = 4;
+					check = 2;
+					Diem = 0;
+					speed = 100;
+					ViTriSang_2 = 0;
+					break;
+				}
+				if (ViTriSang_2 == 2)
+				{
+					ClearScreen();
+					game3();
+					sl = 4;
+					check = 2;
+					Diem = 0;
+					speed = 100;
+					ViTriSang_2 = 0;
+					break;
+				}
+				if (ViTriSang_2 == 3)
+				{
+					ClearScreen();
+					mode_bong_bay();
+					sl = 4;
+					check = 2;
+					Diem = 0;
+					speed = 100;
+					ViTriSang_2 = 0;
+					break;
+				}
+				if (ViTriSang_2 == 4)
+				{
+					ClearScreen();
+					game5();
+					sl = 4;
+					check = 2;
+					Diem = 0;
+					speed = 100;
+					ViTriSang_2 = 0;
+					break;
+				}
+			}
+		}
+		if (ViTriSang_2 == 6)
+		{
+			ViTriSang_2 = 0;
+		}
+		if (ViTriSang_2 == -1)
+		{
+			ViTriSang_2 = 5;
+		}
+	}
+
+}
+void Tao_Chu_2()
+{
+	gotoXY(47, 25);
+	cout << "MODE 1";
+	gotoXY(47, 26);;
+	cout << "MODE 2";
+	gotoXY(47, 27);
+	cout << "MODE 3";
+	gotoXY(47, 28);
+	cout << "MODE 4";
+	gotoXY(47, 29);
+	cout << "MODE 5";
+	gotoXY(47, 30);
+	cout << "BACK";
+}
+void Thanh_Sang_2(int ViTriSang, int &xcu, int &ycu)
+{
+	if (ViTriSang == 0)
+	{
+		gotoXY(xcu, ycu);
+		cout << " ";
+		SetColor(7);
+		Tao_Chu_2();
+		gotoXY(47, 25);
+		SetColor(5);
+		cout << "MODE 1";
+		gotoXY(45, 25);
+		cout << char(16);
+		xcu = 45, ycu = 25;
+	}
+	else if (ViTriSang == 1)
+	{
+		gotoXY(xcu, ycu);
+		cout << " ";
+		SetColor(7);
+		Tao_Chu_2();
+		gotoXY(47, 26);
+		SetColor(5);
+		cout << "MODE 2";
+		gotoXY(45, 26);
+		cout << char(16);
+		xcu = 45, ycu = 26;
+	}
+	else if (ViTriSang == 2)
+	{
+		gotoXY(xcu, ycu);
+		cout << " ";
+		SetColor(7);
+		Tao_Chu_2();
+		gotoXY(47, 27);
+		SetColor(5);
+		cout << "MODE 3";
+		gotoXY(45, 27);
+		cout << char(16);
+		xcu = 45, ycu = 27;
+	}
+	else if (ViTriSang == 3)
+	{
+		gotoXY(xcu, ycu);
+		cout << " ";
+		SetColor(7);
+		Tao_Chu_2();
+		gotoXY(47, 28);
+		SetColor(5);
+		cout << "MODE 4";
+		gotoXY(45, 28);
+		cout << char(16);
+		xcu = 45, ycu = 28;
+	}
+	else if (ViTriSang == 4)
+	{
+		gotoXY(xcu, ycu);
+		cout << " ";
+		SetColor(7);
+		Tao_Chu_2();
+		gotoXY(47, 29);
+		SetColor(5);
+		cout << "MODE 5";
+		gotoXY(45, 29);
+		cout << char(16);
+		xcu = 45, ycu = 29;
+	}
+	else if (ViTriSang == 5)
+	{
+		gotoXY(xcu, ycu);
+		cout << " ";
+		SetColor(7);
+		Tao_Chu_2();
+		gotoXY(47, 30);
+		SetColor(5);
+		cout << "BACK";
+		gotoXY(45, 30);
+		cout << char(16);
+		xcu = 45, ycu = 30;
+	}
+}
+void Mo_File_Menu_2()
+{
+	ifstream file;
+	file.open("image_menu2.txt", ios_base::in);
+	string line;
+	while (getline(file, line))
+	{
+		cout << line << endl;
+		Sleep(30);
+	}
+	file.close();
+}
+// ================ RAN InTro================
+void Tao_InTro()
+{
+	int toadox[100], toadoy[100];
+	Khoi_Tao_Ran_Intro(toadox, toadoy);
+	Ve_Ran(toadox, toadoy);
+	int x = 1, y = 20;
+	while (!_kbhit())
+	{
+		Don_Rac_Ran();
+		gotoXY(55, 20);
+		SetColor(7);
+		cout << "Press any button";
+		Nocursortype();
+		Xoa_Du_Lieu_Cu(toadox, toadoy);
+		x++;
+		Xu_Li_Ran_InTro(toadox, toadoy, x, y);
+		Xu_Li_Ran_Cham_Tuong_InTro(toadox, toadoy, x, y);
+		Sleep(50);
+	}
+	for (int i = 0; i < sl; i++)
+	{
+		gotoXY(toadox[i], toadoy[i]);
+		cout << " ";
+	}
+	ClearScreen();
+	bool kt = false;
+	x = 1, y = 20;
+	gotoXY(55, 20);
+	SetColor(7);
+	cout << "Press any button";
+	Khoi_Tao_Ran_Intro(toadox, toadoy);
+	Ve_Ran(toadox, toadoy);
+	while (!kt)
+	{
+
+		Xoa_Du_Lieu_Cu(toadox, toadoy);
+		x++;
+		Xu_Li_Ran_InTro(toadox, toadoy, x, y);
+		if (toadox[0] == 71)
+		{
+			kt = true; // ket thuc intro
+		}
+		Sleep(50);
+	}
+}
+void Ve_Ran(int toadox[], int toadoy[])
+{
+	int mau;
+	for (int i = 0; i < sl; i++)
+	{
+
+		if (i == 0)
+		{
+			mau = rand() % (16 - 1 + 1) + 1;
+			SetColor(mau);
+			gotoXY(toadox[i], toadoy[i]);
+			cout << "C";
+
+		}
+		else
+		{
+			mau = rand() % (16 - 1 + 1) + 1;
+			SetColor(mau);
+			gotoXY(toadox[i], toadoy[i]);
+			cout << "O";
+		}
+	}
+}
+void Khoi_Tao_Ran_Intro(int toadox[], int toadoy[])
+{
+	int x = 1, y = 20;
+	for (int i = 0; i < sl; i++)
+	{
+		toadox[i] = x;
+		toadoy[i] = y;
+		x--;
+	}
+}
+void Xoa_Du_Lieu_Cu(int toadox[], int todoy[])
+{
+	for (int i = 0; i < sl; i++)
+	{
+		gotoXY(toadox[i], todoy[i]);
+		cout << " ";
+	}
+}
+void Xu_Li_Ran_InTro(int toadox[], int toadoy[], int x, int y)
+{
+	// b1: thêm toạ độ mới vào đẩu mảng
+	them(toadox, x);
+	them(toadoy, y);
+
+	// b2: xoá toạ độ cuối
+	xoa(toadox, sl - 1);
+	xoa(toadoy, sl - 1);
+
+	m.lock();
+	Ve_Ran(toadox, toadoy);
+	m.unlock();
+}
+void them(int a[], int x)
+{
+	for (int i = sl; i > 0; i--)
+	{
+		a[i] = a[i - 1];
+	}
+	a[0] = x;
+	sl++;
+}
+void xoa(int a[], int vt)
+{
+	for (int i = vt; i < sl; i++)
+	{
+		a[i] = a[i + 1];
+	}
+	sl--;
+}
+void Xu_Li_Ran_Cham_Tuong_InTro(int toadox[], int toadoy[], int &x, int &y)
+{
+	if (toadox[0] == 125)
+	{
+		x = 1;
+	}
+}
+void Don_Rac_Ran()
+{
+	for (int i = 0; i <= 125; i++)
+	{
+		gotoXY(i, 20);
+		cout << "                                                                                       ";
+
+	}
+}
+
+// =================== RET ===================
+void Intro_Ret()
+{
+	int toadoRetX[100], toadoRetY[100];
+	int toadoChanTraiX[100], toadoChanTraiY[100];
+	int toadoChanPhaiX[100], toadoChanPhaiY[100];
+	Khoi_Tao_Ret(toadoRetX, toadoRetY, toadoChanTraiX, toadoChanTraiY, toadoChanPhaiX, toadoChanPhaiY);
+	Ve_Ret(toadoRetX, toadoRetY, toadoChanTraiX, toadoChanTraiY, toadoChanPhaiX, toadoChanPhaiY);
+	int x_ret = 40, y_ret = 42;
+
+	while (!_kbhit())
+	{
+
+
+		Don_Rac_Ret();
+		//ClearScreen();
+		Xoa_Du_Lieu_Cu_Ret(toadoChanTraiX, toadoChanTraiY);
+		y_ret--;
+		Xu_Li_Ret_InTro(toadoRetX, toadoRetY, toadoChanTraiX, toadoChanTraiY, toadoChanPhaiX, toadoChanPhaiY, x_ret, y_ret);
+		xu_li_Ret_Cham_Tuong_inTro(toadoRetX, toadoRetY, toadoChanTraiX, toadoChanTraiY, toadoChanPhaiX, toadoChanPhaiY, x_ret, y_ret);
+		Sleep(50);
+	}
+}
+
+void Ve_Ret(int toadoRetX[], int toadoRetY[], int toadoChanTraiX[], int toadoChanTraiY[], int toadoChanPhaiX[], int toadoChanPhaiY[])
+{
+	SetColor(5);
+	for (int i = 0; i < sl_dot; i++)
+	{
+		if (i == 0)
+		{
+			gotoXY(toadoRetX[i], toadoRetY[i]);
+			cout << char(153);
+		}
+		else
+		{
+			gotoXY(toadoRetX[i], toadoRetY[i]);
+			cout << "O";
+		}
+		gotoXY(toadoChanTraiX[i], toadoChanTraiY[i]);
+		cout << ">";
+		gotoXY(toadoChanPhaiX[i], toadoChanPhaiY[i]);
+		cout << "<";
+	}
+	SetColor(5);
+}
+void Khoi_Tao_Ret(int toadoRetX[], int toadoRetY[], int toadoChanTraiX[], int toadoChanTraiY[], int toadoChanPhaiX[], int toadoChanPhaiY[])
+{
+	int x_ret = 40, y = 42;
+
+	for (int i = 0; i < sl_dot; i++)
+	{
+		toadoRetX[i] = x_ret;
+		toadoRetY[i] = y;
+		toadoChanTraiX[i] = x_ret - 1;
+		toadoChanTraiY[i] = y;
+		toadoChanPhaiX[i] = x_ret + 1;
+		toadoChanPhaiY[i] = y;
+		y++;
+	}
+}
+void Xu_Li_Ret_InTro(int toadoRetX[], int toadoRetY[], int toadoChanTraiX[], int toadoChanTraiY[], int toadoChanPhaiX[], int toadoChanPhaiY[], int x_ret, int y)
+{
+	// b1: thêm toạ độ mới vào đẩu mảng
+	them_Ret(toadoRetX, x_ret);
+	them_Ret(toadoRetY, y);
+	them_Ret(toadoChanTraiX, x_ret - 1);
+	them_Ret(toadoChanTraiY, y);
+	them_Ret(toadoChanPhaiX, x_ret + 1);
+	them_Ret(toadoChanPhaiY, y);
+
+	// b2: xoá toạ độ cuối
+	xoa_Ret(toadoRetX, sl_dot - 1);
+	xoa_Ret(toadoRetY, sl_dot - 1);
+	xoa_Ret(toadoChanTraiX, sl_dot - 1);
+	xoa_Ret(toadoChanTraiY, sl_dot - 1);
+	xoa_Ret(toadoChanPhaiX, sl_dot - 1);
+	xoa_Ret(toadoChanPhaiY, sl_dot - 1);
+
+	// b3: ve ret
+
+	Ve_Ret(toadoRetX, toadoRetY, toadoChanTraiX, toadoChanTraiY, toadoChanPhaiX, toadoChanPhaiY);
+
+}
+void them_Ret(int a[], int x)
+{
+	for (int i = sl_dot; i > 0; i--)
+	{
+		a[i] = a[i - 1];
+	}
+	a[0] = x;
+	sl_dot++;
+}
+void xoa_Ret(int a[], int vt)
+{
+	for (int i = vt; i < sl_dot; i++)
+	{
+		a[i] = a[i + 1];
+	}
+	sl_dot--;
+}
+void Xoa_Du_Lieu_Cu_Ret(int toadoChanTraiX[], int toadoChanTraiY[])
+{
+	for (int i = 0; i < sl_dot; i++)
+	{
+		gotoXY(toadoChanTraiX[i], toadoChanTraiY[i]);
+		cout << "   ";
+	}
+}
+void xu_li_Ret_Cham_Tuong_inTro(int toadoRetX[], int toadoRetY[], int toadoChanTraiX[], int toadoChanTraiY[], int toadoChanPhaiX[], int toadoChanPhaiY[], int &x_ret, int &y_ret)
+{
+	if (toadoRetY[0] == 0)
+	{
+		y_ret = 42;
+	}
+}
+void Don_Rac_Ret()
+{
+	for (int i = 42; i >= 0; i--)
+	{
+		gotoXY(39, i);
+		cout << "    ";
+	}
+}
+
+// ====================== GAME 1 ======================
+void game1()
+{
+	gotoXY(40, 2);
+	SetColor(10);
+	cout << "MODE TRUYEN THONG";
+	gotoXY(5, 3);
+	SetColor(12);
+	cout << "DIEM SO: ";
+	bool gameover = false;
+	Ve_Tuong();
+	SetColor(7);
+	int toadox[100], toadoy[100];
+	Khoi_tao_ran(toadox, toadoy);
+	Ve_Ran(toadox, toadoy);
+	// ======== kiem tra va tao qua
+	srand(time(NULL));
+	// tao qua
+	int xqua = 0, yqua = 0;
+	tao_qua(xqua, yqua, toadox, toadoy);
+	////----------------
+	int x = 50, y = 13; // Ä‘á»‹nh hÃ¬nh vá»‹ trÃ­ di chuyá»ƒn cho con ráº¯n
+
+	// táº¡o báº£ng Ä‘iá»ƒm
+	while (gameover == false)
+	{
+		Nocursortype();
+		gotoXY(15, 3);
+		SetColor(7);
+		cout << Diem;
+
+		//=====backspace
+		Xoa_Du_Lieu_Cu(toadox, toadoy);
+		// 0: Ä‘i xuá»‘ng
+		// 1: Ä‘i lÃªn
+		// 2: Ä‘i qua pháº£i
+		// 3: Ä‘i qua trÃ¡i
+		//======= ===dieu khien
+		if (_kbhit())
+		{
+			char kitu = _getch();
+			if (kitu == -32)
+			{
+				kitu = _getch();
+				if (kitu == 72 && check != 0)// di len
+				{
+					check = 1;
+
+				}
+				if (kitu == 80 && check != 1)// di xuong
+				{
+					check = 0;
+
+				}
+				if (kitu == 77 && check != 3)// di qua phai
+				{
+					check = 2;
+
+				}
+				if (kitu == 75 && check != 2)// di qua trai
+				{
+					check = 3;
+
+				}
+			}
+		}
+
+		// ========== thá»±c hiá»‡n di chuyá»ƒn
+		if (check == 0)
+		{
+			y++;
+			// Ä‘i xuá»‘ng
+		}
+		else if (check == 1)
+		{
+			y--;
+			// Ä‘i lÃªn
+		}
+		else if (check == 2)
+		{
+			x++;
+
+			// Ä‘i qua pháº£i
+		}
+		else if (check == 3)
+		{
+			x--;
+
+			// Ä‘i qua trÃ¡i
+		}
+
+		Xu_Li_Ran(toadox, toadoy, x, y, xqua, yqua);
+		// ============ kiem tra =========
+		gameover = kt_ran(toadox, toadoy);
+		if (Diem > 10)
+			speed = 50;
+		Ham_Toc_Do_Cua_Ran();
+	}
+}
+
+void Ve_Tuong_Tren()
+{
+	int x = 5, y = 5;
+	while (x <= 60)
+	{
+		gotoXY(x, y);
+		Sleep(10);
+		cout << (char)220;
+		x++;
+	}
+}
+void Ve_Tuong_Duoi()
+{
+	int x = 5, y = 31;
+	while (x <= 60)
+	{
+		gotoXY(x, y);
+		Sleep(10);
+		cout << (char)223;
+		x++;
+	}
+}
+void Ve_Tuong_Trai()
+{
+	int x = 5, y = 6;
+	while (y <= 30)
+	{
+		gotoXY(x, y);
+		Sleep(10);
+		cout << (char)219;
+		y++;
+	}
+}
+void Ve_Tuong_Phai()
+{
+	int x = 60, y = 6;
+	while (y <= 30)
+	{
+		gotoXY(x, y);
+		Sleep(10);
+		cout << (char)219;
+		y++;
+	}
+}
+void Ve_Tuong()
+{
+	SetColor(13);
+	Ve_Tuong_Tren();
+	Ve_Tuong_Duoi();
+	Ve_Tuong_Trai();
+	Ve_Tuong_Phai();
+
+}
+void Khoi_tao_ran(int toadox[], int toadoy[])
+{
+	int x = 50, y = 15;
+	for (int i = 0; i < sl; i++)
+	{
+		toadox[i] = x;
+		toadoy[i] = y;
+		x--;
+	}
+}
+
+void Xu_Li_Ran(int toadox[], int toadoy[], int x, int y, int &xqua, int &yqua)
+{
+	// b1: thÃªm toáº¡ Ä‘á»™ má»›i vÃ o Ä‘áº©u máº£ng
+	them(toadox, x);
+	them(toadoy, y);
+	if (kt_ran_an_qua(xqua, yqua, toadox[0], toadoy[0]) == false)
+	{
+		// b2: xoÃ¡ toáº¡ Ä‘á»™ cuá»‘i
+		xoa(toadox, sl - 1);
+		xoa(toadoy, sl - 1);
+	}
+	else
+	{
+		sl--;
+		tao_qua(xqua, yqua, toadox, toadoy);
+		Diem++;
+	}
+	// b3: váº½ ráº¯n
+	Ve_Ran(toadox, toadoy);
+
+}
+bool kt_ran_cham_tuong(int x0, int y0)
+{
+	// ráº¯n cháº¡m tÆ°á»ng trÃªn
+	if (y0 == 5 && (x0 >= 5 && x0 <= 61))
+	{
+		gotoXY(x0, y0);
+		SetColor(13);
+		cout << (char)223;
+		SetColor(7);
+		return true; //gameover
+	}
+	// ráº¯n cháº¡m tÆ°á»ng dÆ°á»›i
+	if (y0 == 31 && (x0 >= 5 && x0 <= 60))
+	{
+		gotoXY(x0, y0);
+		SetColor(13);
+		cout << (char)223;
+		SetColor(7);
+		return true; //gameover
+	}
+	// ráº¯n cháº¡m tÆ°á»ng trÃ¡i
+	if (x0 == 5 && (y0 >= 5 && y0 <= 31))
+	{
+		gotoXY(x0, y0);
+		SetColor(13);
+		cout << (char)219;
+		SetColor(7);
+		return true;//gameover
+	}
+	// ráº¯n cháº¡m tÆ°á»ng pháº£i
+	if (x0 == 60 && (y0 >= 5 && y0 <= 30))
+	{
+		gotoXY(x0, y0);
+		SetColor(13);
+		cout << (char)219;
+		SetColor(7);
+		return true; //gameover
+	}
+	return false;
+}
+bool kt_ran_can_duoi(int toadox[], int toadoy[])
+{
+	for (int i = 1; i < sl; i++)
+	{
+		if (toadox[0] == toadox[i] && toadoy[0] == toadoy[i])
+		{
+			return true;//gameover
+		}
+	}
+	return false;
+}
+bool kt_ran(int toadox[], int toadoy[])
+{
+	bool kt1 = kt_ran_can_duoi(toadox, toadoy);
+	bool kt2 = kt_ran_cham_tuong(toadox[0], toadoy[0]);
+	if (kt1 == true || kt2 == true)
+	{
+		return true; //gameover
+	}
+	return false;
+}
+void tao_qua(int &xqua, int &yqua, int toadox[], int toadoy[])
+{
+	do
+	{
+		// 11 <= xqua <= 99
+		xqua = rand() % (59 - 6 + 1) + 6;
+		// 2<= yqua <=25
+		yqua = rand() % (30 - 6 + 1) + 6;
+	} while (kt_ran_de_qua(toadox, toadoy, xqua, yqua) == true);
+	int i = rand() % (15 - 9 + 1) + 9;
+	SetColor(4);
+	gotoXY(xqua, yqua);
+	cout << (char)3;
+	SetColor(7);
+}
+bool kt_ran_de_qua(int toadox[], int toadoy[], int xqua, int yqua)
+{
+	for (int i = 0; i < sl; i++)
+	{
+		if (xqua == toadox[i] && yqua == toadoy[i])
+		{
+			return true;
+		}
+	}
+	return false;
+}
+bool kt_ran_an_qua(int xqua, int yqua, int x0, int y0)
+{
+	if (x0 == xqua && y0 == yqua)
+	{
+		return true; // ráº¯n Äƒn quáº£
+	}
+	return false;
+}
+void Ham_Toc_Do_Cua_Ran()
+{
+	if (check == 2)
+	{
+		Sleep(speed);
+	}
+	else if (check == 3)
+	{
+		Sleep(speed);
+	}
+	else if (check == 0)
+	{
+		Sleep(speed * 2);
+	}
+	else if (check == 1)
+	{
+		Sleep(speed * 2);
+	}
+}
+// ===================== GAME 2 ====================
+void game_2()
+{
+	Ve_Tuong_Mode2();
+	int toadox[100], toadoy[100];
+	Khoi_tao_ran_Mode2(toadox, toadoy);
+	Ve_Ran_Mode2(toadox, toadoy);
+	bool gameover = false;
+
+	// tao qua
+	int xqua = 0, yqua = 0;
+	tao_qua_Mode2(xqua, yqua, toadox, toadoy);
+	int x = 25, y = 20;
+	gotoXY(5, 3);
+	cout << "DIEM: ";
+	while (gameover == false)
+	{
+		Nocursortype();
+		gotoXY(12, 3);
+		SetColor(13);
+		cout << Diem;
+		SetColor(7);
+
+		//=====backspace
+		Xoa_Du_Lieu_Cu(toadox, toadoy);
+		// 0: Ã„â€˜i xuÃ¡Â»â€˜ng
+		// 1: Ã„â€˜i lÃƒÂªn
+		// 2: Ã„â€˜i qua phÃ¡ÂºÂ£i
+		// 3: Ã„â€˜i qua trÃƒÂ¡i
+		//======= ===dieu khien
+		if (_kbhit())
+		{
+			char kitu = _getch();
+			if (kitu == -32)
+			{
+				kitu = _getch();
+				if (kitu == 72 && check != 0)// di len
+				{
+					check = 1;
+
+				}
+				if (kitu == 80 && check != 1)// di xuong
+				{
+					check = 0;
+
+				}
+				if (kitu == 77 && check != 3)// di qua phai
+				{
+					check = 2;
+
+				}
+				if (kitu == 75 && check != 2)// di qua trai
+				{
+					check = 3;
+
+				}
+			}
+		}
+
+		// ========== thÃ¡Â»Â±c hiÃ¡Â»â€¡n di chuyÃ¡Â»Æ’n
+		if (check == 0)
+		{
+			y++;
+			// Ã„â€˜i xuÃ¡Â»â€˜ng
+		}
+		else if (check == 1)
+		{
+			y--;
+			// Ã„â€˜i lÃƒÂªn
+		}
+		else if (check == 2)
+		{
+			x++;
+
+			// Ã„â€˜i qua phÃ¡ÂºÂ£i
+		}
+		else if (check == 3)
+		{
+			x--;
+
+			// Ã„â€˜i qua trÃƒÂ¡i
+		}
+
+
+		Xu_Li_Ran_Mode2(toadox, toadoy, x, y, xqua, yqua);
+		ran_cham_tuong_Mode2(toadox, toadoy, x, y);
+		gameover = kt_ran_can_duoi_Mode2(toadox, toadoy);
+		Sleep(100);
+	}
+	Sleep(500);
+}
+void Ve_Tuong_Tren_Mode2()
+{
+	int x = 5, y = 5;
+	while (x <= 50)
+	{
+		gotoXY(x, y);
+
+		cout << (char)223;
+		x++;
+	}
+}
+void Ve_Tuong_Duoi_Mode2()
+{
+	int x = 5, y = 40;
+	while (x <= 50)
+	{
+		gotoXY(x, y);
+
+		cout << (char)223;
+		x++;
+	}
+}
+void Ve_Tuong_Trai_Mode2()
+{
+	int x = 5, y = 5;
+	while (y <= 39)
+	{
+		gotoXY(x, y);
+
+		cout << (char)219;
+		y++;
+	}
+}
+void Ve_Tuong_Phai_Mode2()
+{
+	int x = 50, y = 5;
+	while (y <= 39)
+	{
+		gotoXY(x, y);
+		cout << (char)219;
+		y++;
+	}
+}
+void Ve_Tuong_Mode2()
+{
+	SetColor(2);
+	Ve_Tuong_Tren_Mode2();
+	Ve_Tuong_Duoi_Mode2();
+	Ve_Tuong_Trai_Mode2();
+	Ve_Tuong_Phai_Mode2();
+}
+void Khoi_tao_ran_Mode2(int toadox[], int toadoy[])
+{
+	int x = 25, y = 20;
+	for (int i = 0; i < sl; i++)
+	{
+		toadox[i] = x;
+		toadoy[i] = y;
+		x--;
+	}
+}
+void Ve_Ran_Mode2(int toadox[], int todoy[])
+{
+	SetColor(7);
+	for (int i = 0; i < sl; i++)
+	{
+		gotoXY(toadox[i], todoy[i]);
+		if (i == 0)
+		{
+			cout << (char)153;
+		}
+		else
+		{
+			cout << (char)4;
+		}
+	}
+}
+void ran_cham_tuong_Mode2(int toadox[], int toadoy[], int &x, int &y)
+{
+
+	// cháº¡m tÆ°á»ng trÃªn
+	if ((toadox[0] >= 5 && toadox[0] <= 50) && toadoy[0] == 5)
+	{
+		toadoy[0] == 5;
+		for (int j = 5; j <= 50; j++)
+		{
+			if ((toadox[0] - j) == 0)
+			{
+				toadox[0] = j;
+			}
+		}
+		SetColor(2);
+		gotoXY(toadox[0], toadoy[0]); cout << (char)223;
+		SetColor(7);
+		toadoy[0] = 39;
+		x = toadox[0];
+		y = toadoy[0];
+	}
+	// cháº¡m tÆ°á»ng dÆ°á»›i
+	if ((toadox[0] >= 5 && toadox[0] <= 50) && toadoy[0] == 40)
+	{
+		toadoy[0] == 5;
+		for (int j = 5; j <= 50; j++)
+		{
+			if ((toadox[0] - j) == 0)
+			{
+				toadox[0] = j;
+			}
+		}
+		SetColor(2);
+		gotoXY(toadox[0], toadoy[0]); cout << (char)223;
+		toadoy[0] = 6;
+		SetColor(7);
+		x = toadox[0];
+		y = toadoy[0];
+	}
+	// cháº¡m tÆ°á»ng trÃ¡i
+	if ((toadoy[0] >= 5 && toadoy[0] <= 39) && toadox[0] == 5)
+	{
+		toadox[0] == 5;
+		for (int j = 5; j <= 39; j++)
+		{
+			if ((toadoy[0] - j) == 0)
+			{
+				toadoy[0] = j;
+			}
+		}
+		SetColor(2);
+		gotoXY(toadox[0], toadoy[0]); cout << (char)219;
+		SetColor(7);
+		toadox[0] = 49;
+		x = toadox[0];
+		y = toadoy[0];
+	}
+	// cháº¡m tÆ°á»ng pháº£i
+	if ((toadoy[0] >= 5 && toadoy[0] <= 39) && toadox[0] == 50)
+	{
+		toadox[0] == 50;
+		for (int j = 5; j <= 39; j++)
+		{
+			if ((toadoy[0] - j) == 0)
+			{
+				toadoy[0] = j;
+			}
+		}
+		SetColor(2);
+		gotoXY(toadox[0], toadoy[0]); cout << (char)219;
+		SetColor(7);
+		toadox[0] = 6;
+		x = toadox[0];
+		y = toadoy[0];
+	}
+}
+
+void tao_qua_Mode2(int &xqua, int &yqua, int toadox[], int toadoy[])
+{
+	do
+	{
+		// 11 <= xqua <= 99
+		xqua = rand() % (49 - 6 + 1) + 6;
+		// 2<= yqua <=25
+		yqua = rand() % (38 - 6 + 1) + 6;
+	} while (kt_ran_de_qua(toadox, toadoy, xqua, yqua) == true);
+	SetColor(4);
+	gotoXY(xqua, yqua);
+	cout << (char)3;
+	SetColor(7);
+}
+void Xu_Li_Ran_Mode2(int toadox[], int toadoy[], int x, int y, int &xqua, int &yqua)
+{
+	// b1: thÃƒÂªm toÃ¡ÂºÂ¡ Ã„â€˜Ã¡Â»â„¢ mÃ¡Â»â€ºi vÃƒ o Ã„â€˜Ã¡ÂºÂ©u mÃ¡ÂºÂ£ng
+	them(toadox, x);
+	them(toadoy, y);
+	if (kt_ran_an_qua(xqua, yqua, toadox[0], toadoy[0]) == false)
+	{
+		// b2: xoÃƒÂ¡ toÃ¡ÂºÂ¡ Ã„â€˜Ã¡Â»â„¢ cuÃ¡Â»â€˜i
+		xoa(toadox, sl - 1);
+		xoa(toadoy, sl - 1);
+	}
+	else
+	{
+		Diem++;
+		sl--;
+		tao_qua_Mode2(xqua, yqua, toadox, toadoy);
+	}
+	// b3: vÃ¡ÂºÂ½ rÃ¡ÂºÂ¯n
+	Ve_Ran_Mode2(toadox, toadoy);
+
+}
+bool kt_ran_can_duoi_Mode2(int toadox[], int toadoy[])
+{
+	for (int i = 1; i < sl; i++)
+	{
+		if (toadox[0] == toadox[i] && toadoy[0] == toadoy[i])
+		{
+
+			for (int i = 0; i < sl; i++)
+			{
+				SetColor(4);
+				toadox[i];
+				toadoy[i];
+				gotoXY(toadox[i], toadoy[i]);
+				cout << (char)4;
+				SetColor(7);
+				Sleep(100);
+			}
+			for (int i = 0; i < sl; i++)
+			{
+				SetColor(4);
+				toadox[i];
+				toadoy[i];
+				gotoXY(toadox[i], toadoy[i]);
+				cout << (char)4;
+				SetColor(7);
+				Sleep(100);
+				Xoa_Du_Lieu_Cu(toadox, toadoy);
+				Sleep(50);
+			}
+			return true;//gameover
+		}
+	}
+	return false;
+}
+
+// ================ GAME 3 ==================
+void game3()
+{
+	gotoXY(40, 2);
+	SetColor(10);
+	cout << "MODE DI XUYEN CONG";
+	gotoXY(5, 3);
+	SetColor(12);
+	cout << "DIEM SO: ";
+	bool gameover = false;
+	Ve_Tuong_Mode3();
+	SetColor(7);
+	int toadox[100], toadoy[100];
+	Khoi_tao_ran_Mode3(toadox, toadoy);
+	Ve_Ran_Mode3(toadox, toadoy);
+	// ======== kiem tra va tao qua
+	srand(time(NULL));
+	// tao qua
+	int xqua = 0, yqua = 0;
+	tao_qua_Mode3(xqua, yqua, toadox, toadoy);
+	// =========== tao cong
+	int xcong = 0, ycong = 0;
+	Tao_Cong_Mode3(toadox, toadoy, xcong, ycong, xqua, yqua);
+	////----------------
+	int x = 50, y = 13; // Ä‘á»‹nh hÃ¬nh vá»‹ trÃ­ di chuyá»ƒn cho con ráº¯n
+
+	// táº¡o báº£ng Ä‘iá»ƒm
+	while (gameover == false)
+	{
+		Nocursortype();
+		gotoXY(15, 3);
+		SetColor(7);
+		cout << Diem;
+
+		//=====backspace
+		Xoa_Du_Lieu_Cu(toadox, toadoy);
+		// 0: Ä‘i xuá»‘ng
+		// 1: Ä‘i lÃªn
+		// 2: Ä‘i qua pháº£i
+		// 3: Ä‘i qua trÃ¡i
+		//======= ===dieu khien
+		if (_kbhit())
+		{
+			char kitu = _getch();
+			if (kitu == -32)
+			{
+				kitu = _getch();
+				if (kitu == 72 && check != 0)// di len
+				{
+					check = 1;
+
+				}
+				if (kitu == 80 && check != 1)// di xuong
+				{
+					check = 0;
+
+				}
+				if (kitu == 77 && check != 3)// di qua phai
+				{
+					check = 2;
+
+				}
+				if (kitu == 75 && check != 2)// di qua trai
+				{
+					check = 3;
+
+				}
+			}
+		}
+
+		// ========== thá»±c hiá»‡n di chuyá»ƒn
+		if (check == 0)
+		{
+			y++;
+			// Ä‘i xuá»‘ng
+		}
+		else if (check == 1)
+		{
+			y--;
+			// Ä‘i lÃªn
+		}
+		else if (check == 2)
+		{
+			x++;
+
+			// Ä‘i qua pháº£i
+		}
+		else if (check == 3)
+		{
+			x--;
+
+			// Ä‘i qua trÃ¡i
+		}
+
+		Xu_Li_Ran_Mode3(toadox, toadoy, x, y, xqua, yqua, xcong, ycong);
+		Xu_Li_Ran_2_Mode3(toadox, toadoy, xqua, yqua, xcong, ycong, x, y);
+		// ============ kiem tra =========
+		gameover = kt_ran(toadox, toadoy);
+		if (Diem > 5)
+		{
+			Sleep(80);
+		}
+		if (Diem <= 5)
+		{
+			Sleep(100);
+		}
+	}
+}
+void Ve_Tuong_Tren_Mode3()
+{
+	int x = 5, y = 5;
+	while (x <= 60)
+	{
+		gotoXY(x, y);
+		Sleep(10);
+		cout << (char)220;
+		x++;
+	}
+}
+void Ve_Tuong_Duoi_Mode3()
+{
+	int x = 5, y = 31;
+	while (x <= 60)
+	{
+		gotoXY(x, y);
+		Sleep(10);
+		cout << (char)223;
+		x++;
+	}
+}
+void Ve_Tuong_Trai_Mode3()
+{
+	int x = 5, y = 6;
+	while (y <= 30)
+	{
+		gotoXY(x, y);
+		Sleep(10);
+		cout << (char)219;
+		y++;
+	}
+}
+void Ve_Tuong_Phai_Mode3()
+{
+	int x = 60, y = 6;
+	while (y <= 30)
+	{
+		gotoXY(x, y);
+		Sleep(10);
+		cout << (char)219;
+		y++;
+	}
+}
+void Ve_Tuong_Mode3()
+{
+	SetColor(13);
+	Ve_Tuong_Tren_Mode3();
+	Ve_Tuong_Duoi_Mode3();
+	Ve_Tuong_Trai_Mode3();
+	Ve_Tuong_Phai_Mode3();
+
+}
+void Khoi_tao_ran_Mode3(int toadox[], int toadoy[])
+{
+	int x = 50, y = 15;
+	for (int i = 0; i < sl; i++)
+	{
+		toadox[i] = x;
+		toadoy[i] = y;
+		x--;
+	}
+}
+void Ve_Ran_Mode3(int toadox[], int todoy[])
+{
+	for (int i = 0; i < sl; i++)
+	{
+		gotoXY(toadox[i], todoy[i]);
+		if (i == 0)
+		{
+			cout << "0";
+		}
+		else if (i == sl - 1)
+		{
+			cout << "s";
+		}
+		else
+		{
+			cout << "o";
+		}
+	}
+}
+void Xu_Li_Ran_Mode3(int toadox[], int toadoy[], int &x, int &y, int &xqua, int &yqua, int &xcong, int &ycong)
+{
+	// b1: thÃªm toáº¡ Ä‘á»™ má»›i vÃ o Ä‘áº©u máº£ng
+	them(toadox, x);
+	them(toadoy, y);
+	if (kt_ran_an_qua_Mode3(xqua, yqua, toadox[0], toadoy[0]) == false)
+	{
+		// b2: xoÃ¡ toáº¡ Ä‘á»™ cuá»‘i
+		xoa(toadox, sl - 1);
+		xoa(toadoy, sl - 1);
+	}
+	else
+	{
+		sl--;
+		x = xcong;
+		y = ycong;
+		tao_qua_Mode3(xqua, yqua, toadox, toadoy);
+		Diem++;
+	}
+	// b3: váº½ ráº¯n
+	Ve_Ran_Mode3(toadox, toadoy);
+
+}
+void tao_qua_Mode3(int &xqua, int &yqua, int toadox[], int toadoy[])
+{
+	do
+	{
+		// 11 <= xqua <= 99
+		xqua = rand() % (59 - 6 + 1) + 7;
+		// 2<= yqua <=25
+		yqua = rand() % (30 - 6 + 1) + 7;
+	} while (kt_ran_de_qua_Mode3(toadox, toadoy, xqua, yqua) == true);
+	SetColor(10);
+	gotoXY(xqua, yqua);
+	cout << "o";
+	SetColor(7);
+}
+bool kt_ran_de_qua_Mode3(int toadox[], int toadoy[], int xqua, int yqua)
+{
+	for (int i = 0; i < sl; i++)
+	{
+		if (xqua == toadox[i] && yqua == toadoy[i])
+		{
+			return true;
+		}
+	}
+	return false;
+}
+bool kt_ran_an_qua_Mode3(int xqua, int yqua, int x0, int y0)
+{
+	if (x0 == xqua && y0 == yqua)
+	{
+		return true; // ráº¯n Äƒn quáº£
+	}
+	return false;
+}
+
+// ----------------------- tao cong -------------------
+void Tao_Cong_Mode3(int toadox[], int toadoy[], int &xcong, int &ycong, int &xqua, int &yqua)
+{
+	do
+	{
+		// 11 <= xcong <= 99
+		xcong = rand() % (59 - 6 + 1) + 6;
+		// 2<= ycong <=25
+		ycong = rand() % (30 - 7 + 1) + 7;
+	} while (kt_qua_de_cong_Mode3(xqua, yqua, xcong, ycong) == true || kt_qua_de_cong_Mode3(xqua, yqua, xcong, ycong));
+	int i = rand() % (15 - 9 + 1) + 9;
+	SetColor(10);
+	gotoXY(xcong, ycong);
+	cout << "o";
+	SetColor(7);
+}
+bool kt_ran_an_cong_Mode3(int xcong, int ycong, int x0, int y0)
+{
+	if (x0 == xcong && y0 == ycong)
+	{
+		return true; // ráº¯n Äƒn quáº£
+	}
+	return false;
+}
+bool kt_ran_de_cong_Mode3(int toadox[], int toadoy[], int xcong, int ycong)
+{
+	for (int i = 0; i < sl; i++)
+	{
+		if (xcong == toadox[i] && ycong == toadoy[i])
+		{
+			return true;
+		}
+	}
+	return false;
+}
+bool kt_qua_de_cong_Mode3(int xqua, int yqua, int xcong, int ycong)
+{
+	if (xqua == xcong && yqua == ycong)
+	{
+		return true;
+	}
+	return false;
+}
+void Xu_Li_Ran_2_Mode3(int toadox[], int toadoy[], int &xqua, int &yqua, int &xcong, int &ycong, int &x, int &y)
+{
+	if (kt_ran_an_cong_Mode3(xcong, ycong, toadox[0], toadoy[0]) == true)
+	{
+		Diem++;
+		x = xqua;
+		y = yqua;
+		Tao_Cong_Mode3(toadox, toadoy, xcong, ycong, xqua, yqua);
+	}
+}
+
+// ========================= MODE 4 ===========================
+void mode_bong_bay()
+{
+	Ve_Tuong_Mode4();
+	Khoi_tao_ran_Mode4(toadox_Mode4, toadoy_Mode4);
+	Ve_Ran_Mode4(toadox_Mode4, toadoy_Mode4);
+	Tao_Bong_Mode4(toadoxBong, toadoyBong, toadox_Mode4, toadoy_Mode4);
+
+	thread bubble(Bubble_main);
+	thread snake(Ran_Mode4);
+
+	bubble.join();
+	snake.join();
+
+}
+void Ran_Mode4()
+{
+	bool gameover = false;
+	Nocursortype();
+
+
+
+	while (gameover == false)
+	{
+		m.lock();
+		Xoa_Du_Lieu_Cu_Mode4(toadox_Mode4, toadoy_Mode4);
+		m.unlock();
+		if (_kbhit())
+		{
+			char kitu = _getch();
+			if (kitu == -32)
+			{
+				kitu = _getch();
+				if (kitu == 72 && check != 0)// di len
+				{
+					check = 1;
+
+				}
+				if (kitu == 80 && check != 1)// di xuong
+				{
+					check = 0;
+
+				}
+				if (kitu == 77 && check != 3)// di qua phai
+				{
+					check = 2;
+
+				}
+				if (kitu == 75 && check != 2)// di qua trai
+				{
+					check = 3;
+
+				}
+			}
+		}
+		if (check == 0)
+		{
+			y_Mode4++;
+			// Ã„â€˜i xuÃ¡Â»â€˜ng
+		}
+		else if (check == 1)
+		{
+			y_Mode4--;
+			// Ã„â€˜i lÃƒÂªn
+		}
+		else if (check == 2)
+		{
+			x_Mode4++;
+
+			// Ã„â€˜i qua phÃ¡ÂºÂ£i
+		}
+		else if (check == 3)
+		{
+			x_Mode4--;
+
+			// Ã„â€˜i qua trÃƒÂ¡i
+		}
+		Xu_Li_Ran_Mode4(toadox_Mode4, toadoy_Mode4, x_Mode4, y_Mode4, toadoxBong, toadoyBong);
+		gameover = kt_ran_Mode4(toadox_Mode4, toadoy_Mode4);
+		if (Diem > 3)
+		{
+			speed = 60;
+		}
+		Ham_Toc_Do_Cua_Ran();
+
+	}
+}
+// ====================== BUBBLE ======================
+void Bubble_main()
+{
+	bool gameover = false;
+
+	while (gameover == false)
+	{
+		m.lock();
+		gotoXY(5, 4);
+		SetColor(7);
+		cout << Diem;
+		m.unlock();
+		m.lock();
+		Draw_Ball(toadoxBong, toadoyBong);
+		// ============= BACK SPACE =============
+
+		gotoXY(toadoxcuBong, toadoycuBong);
+		cout << " ";
+		m.unlock();
+		// ================ Xu Li Cham Bien ================
+		if (toadoxBong >= 59)
+		{
+			check1 = 1; // cham bien phai
+			m1 = 1;
+		}
+		if (toadoxBong <= 7)
+		{
+			check1 = 0; // cham bien trai
+			m1 = 0;
+		}
+		if (toadoyBong >= 30)
+		{
+			check2 = 2;
+			m2 = 0;
+		}
+		if (toadoyBong <= 6)
+		{
+			check2 = 3;
+			m2 = 1;
+		}
+		// ============= cap nhat xcu, ycu =============
+		toadoxcuBong = toadoxBong, toadoycuBong = toadoyBong;
+		for (int i = 1; i < sl; i++)
+		{
+			if (toadox_Mode4[i] == toadoxBong && toadoy_Mode4[i] == toadoyBong)
+			{
+				if (check2 == 3 && m1 == 1)
+				{
+					check2 = 2;
+				}
+				else if (check1 == 0 && m1 == 0)
+				{
+					check1 = 1;
+				}
+				else if (check2 == 2 && m2 == 0)
+				{
+					check2 = 3;
+				}
+				else if (check2 == 3 && m2 == 1)
+				{
+					check2 = 2;
+				}
+			}
+		}
+		// ============= Huong Bong Di Chuyen =============
+		int i = rand() % (2 - 1 + 1) + 1;
+
+		if (check1 == 1)
+		{
+			toadoxBong--; // bÃ³ng Ä‘i qua trÃ¡i
+		}
+		if (check1 == 0)
+		{
+			toadoxBong++; // bÃ³ng Ä‘i qua pháº£i
+		}
+		if (check2 == 2)
+		{
+			toadoyBong--; // bÃ³ng Ä‘i lÃªn
+		}
+		if (check2 == 3)
+		{
+			toadoyBong++; // bÃ³ng Ä‘i xuá»‘ng
+		}
+
+		gameover = kt_ran_Mode4(toadox_Mode4, toadoy_Mode4);
+		Sleep(300);
+	}
+}
+void Draw_Ball(int toadoxBong, int toadoyBong)
+{
+	int mau = rand() % (15 - 1 + 1) + 1;
+	SetColor(7);
+	gotoXY(toadoxBong, toadoyBong);
+	cout << "O";
+}
+
+// ======================== WALL ========================
+void Ve_Tuong_Tren_Mode4()
+{
+	int x = 5, y = 5;
+	while (x <= 60)
+	{
+		gotoXY(x, y);
+		Sleep(10);
+		cout << (char)220;
+		x++;
+	}
+}
+void Ve_Tuong_Duoi_Mode4()
+{
+	int x = 5, y = 31;
+	while (x <= 60)
+	{
+		gotoXY(x, y);
+		Sleep(10);
+		cout << (char)223;
+		x++;
+	}
+}
+void Ve_Tuong_Trai_Mode4()
+{
+	int x = 5, y = 6;
+	while (y <= 30)
+	{
+		gotoXY(x, y);
+		Sleep(10);
+		cout << (char)219;
+		y++;
+	}
+}
+void Ve_Tuong_Phai_Mode4()
+{
+	int x = 60, y = 6;
+	while (y <= 30)
+	{
+		gotoXY(x, y);
+		Sleep(10);
+		cout << (char)219;
+		y++;
+	}
+}
+void Ve_Tuong_Mode4()
+{
+	SetColor(13);
+	Ve_Tuong_Tren_Mode4();
+	Ve_Tuong_Duoi_Mode4();
+	Ve_Tuong_Trai_Mode4();
+	Ve_Tuong_Phai_Mode4();
+
+}
+// ====================== SNAKE ======================
+void Khoi_tao_ran_Mode4(int toadox[], int toadoy[])
+{
+	int x = 50, y = 15;
+	for (int i = 0; i < sl; i++)
+	{
+		toadox[i] = x;
+		toadoy[i] = y;
+		x--;
+	}
+}
+void Ve_Ran_Mode4(int toadox[], int todoy[])
+{
+	SetColor(5);
+	for (int i = 0; i < sl; i++)
+	{
+		gotoXY(toadox[i], todoy[i]);
+		if (i == 0)
+		{
+			cout << "X";
+		}
+
+		else
+		{
+			cout << "o";
+		}
+	}
+}
+void Xoa_Du_Lieu_Cu_Mode4(int toadox[], int todoy[])
+{
+	for (int i = 0; i < sl; i++)
+	{
+		gotoXY(toadox[i], todoy[i]);
+		cout << " ";
+	}
+}
+void Xu_Li_Ran_Mode4(int toadox[], int toadoy[], int x, int y, int &toadoxBong, int &toadoyBong)
+{
+	m.lock();
+	// b1: thÃƒÂªm toÃ¡ÂºÂ¡ Ã„â€˜Ã¡Â»â„¢ mÃ¡Â»â€ºi vÃƒ o Ã„â€˜Ã¡ÂºÂ©u mÃ¡ÂºÂ£ng
+	them_Mode4(toadox, x);
+	them_Mode4(toadoy, y);
+	if (kt_ran_an_bong_Mode4(toadoxBong, toadoyBong, toadox[0], toadoy[0]) == false)
+	{
+		// b2: xoÃƒÂ¡ toÃ¡ÂºÂ¡ Ã„â€˜Ã¡Â»â„¢ cuÃ¡Â»â€˜i
+		xoa_Mode4(toadox, sl - 1);
+		xoa_Mode4(toadoy, sl - 1);
+	}
+	else
+	{
+		sl--;
+		Tao_Bong_Mode4(toadoxBong, toadoyBong, toadox, toadoy);
+		Diem++;
+	}
+	// b3: vÃ¡ÂºÂ½ rÃ¡ÂºÂ¯n
+	Ve_Ran_Mode4(toadox, toadoy);
+	m.unlock();
+}
+void them_Mode4(int a[], int x)
+{
+	for (int i = sl; i > 0; i--)
+	{
+		a[i] = a[i - 1];
+	}
+	a[0] = x;
+	sl++;
+}
+void xoa_Mode4(int a[], int vt)
+{
+	for (int i = vt; i < sl; i++)
+	{
+		a[i] = a[i + 1];
+	}
+	sl--;
+}
+bool kt_ran_cham_tuong_Mode4(int x0, int y0)
+{
+	// rÃ¡ÂºÂ¯n chÃ¡ÂºÂ¡m tÃ†Â°Ã¡Â»Âng trÃƒÂªn
+	if (y0 == 5 && (x0 >= 5 && x0 <= 60))
+	{
+		gotoXY(x0, y0);
+		SetColor(13);
+		cout << (char)223;
+		SetColor(7);
+		return true; //gameover
+	}
+	// rÃ¡ÂºÂ¯n chÃ¡ÂºÂ¡m tÃ†Â°Ã¡Â»Âng dÃ†Â°Ã¡Â»â€ºi
+	if (y0 == 31 && (x0 >= 5 && x0 <= 60))
+	{
+		gotoXY(x0, y0);
+		SetColor(13);
+		cout << (char)223;
+		SetColor(7);
+		return true; //gameover
+	}
+	// rÃ¡ÂºÂ¯n chÃ¡ÂºÂ¡m tÃ†Â°Ã¡Â»Âng trÃƒÂ¡i
+	if (x0 == 5 && (y0 >= 5 && y0 <= 31))
+	{
+		gotoXY(x0, y0);
+		SetColor(13);
+		cout << (char)219;
+		SetColor(7);
+		return true;//gameover
+	}
+	// rÃ¡ÂºÂ¯n chÃ¡ÂºÂ¡m tÃ†Â°Ã¡Â»Âng phÃ¡ÂºÂ£i
+	if (x0 == 60 && (y0 >= 5 && y0 <= 31))
+	{
+		gotoXY(x0, y0);
+		SetColor(13);
+		cout << (char)219;
+		SetColor(7);
+		return true; //gameover
+	}
+	return false;
+}
+bool kt_ran_can_duoi_Mode4(int toadox[], int toadoy[])
+{
+	for (int i = 1; i < sl; i++)
+	{
+		if (toadox[0] == toadox[i] && toadoy[0] == toadoy[i])
+		{
+			return true;//gameover
+		}
+	}
+	return false;
+}
+bool kt_ran_Mode4(int toadox[], int toadoy[])
+{
+	bool kt1 = kt_ran_can_duoi_Mode4(toadox, toadoy);
+	bool kt2 = kt_ran_cham_tuong_Mode4(toadox[0], toadoy[0]);
+	if (kt1 == true || kt2 == true)
+	{
+		return true; //gameover
+	}
+	return false;
+}
+bool kt_ran_an_bong_Mode4(int toadoxBong, int toadoyBong, int x0, int y0)
+{
+	if (toadoxBong == x0 && toadoyBong == y0)
+	{
+		return true;
+	}
+	return false;
+}
+bool kt_ran_de_bong_Mode4(int toadoxBong, int toadoyBong, int toadox[], int toadoy[])
+{
+	for (int i = 0; i < sl; i++)
+	{
+		if (toadoxBong == toadox[i] && toadoyBong == toadox[i])
+		{
+			return true;
+		}
+	}
+	return false;
+}
+void Tao_Bong_Mode4(int &toadoxBong, int &toadoyBong, int toadox[], int toadoy[])
+{
+	do
+	{
+		toadoxBong = rand() % (58 - 6 + 1) + 6;
+		toadoyBong = rand() % (30 - 6 + 1) + 6;
+	} while (kt_ran_de_bong_Mode4(toadoxBong, toadoyBong, toadox, toadoy) == true);
+
+}
+
+// ===================== GAME 5 =====================
+void game5()
+{
+	// ------------------ RAN -----------------
+	Ve_Tuong_Mode5();
+	gotoXY(45, 32);
+	cout << "IF SNAKE EATS 3 DOLLARS , THE GAME WILL APPEAR A MYSTERY";
+	gotoXY(45, 33);
+	cout << "BOX. THERE ARE SIX MIRACLE";
+	gotoXY(45, 34);
+	cout << "IF DIEM < 0 . GAME OVER";
+	SetColor(3);
+	gotoXY(10, 3);
+	cout << "DIEM SO: ";
+	SetColor(mauRan_Mode5);
+	Khoi_tao_ran_Mode5(toadox_Mode5, toadoy_Mode5);
+	Ve_Ran_Mode5(toadox_Mode5, toadoy_Mode5);
+	// ======== kiem tra va tao qua
+	srand(time(NULL));
+	// tao qua
+	tao_qua_Mode5(xqua_Mode5, yqua_Mode5, toadox_Mode5, toadoy_Mode5);
+
+	////----------------Ret-----------------------
+
+	Khoi_Tao_Ret_Mode5(toadoRetX_Mode5, toadoRetY_Mode5, toadoChanTraiX_Mode5, toadoChanTraiY_Mode5, toadoChanPhaiX_Mode5, toadoChanPhaiY_Mode5);
+	Ve_Ret_Mode5(toadoRetX_Mode5, toadoRetY_Mode5, toadoChanTraiX_Mode5, toadoChanTraiY_Mode5, toadoChanPhaiX_Mode5, toadoChanPhaiY_Mode5);
+
+
+	thread ran(run_ran_Mode5);
+	thread ret(Intro_Ret_Mode5);
+
+	ran.join();
+	ret.join();
+}
+
+// =================== GAME ======================
+
+void run_ran_Mode5()
+{
+	while (gameover_Mode5 == false)
+	{
+		if (kt_ret_cham_ran_Mode5(toadox_Mode5, toadoy_Mode5, toadoRetX_Mode5, toadoRetY_Mode5, toadoChanTraiX_Mode5, toadoChanTraiY_Mode5, toadoChanPhaiX_Mode5, toadoChanPhaiY_Mode5) == true)
+		{
+			if (time5_Mode5 == 0)
+			{
+				Diem_Mode5--;
+			}
+
+		}
+		if (timeSinhTon_Mode5 == 0)
+		{
+			Diem_Mode5--;
+			timeSinhTon_Mode5 = 150;
+		}
+		if (Diem_Mode5 < 0)
+		{
+			break;
+		}
+		Nocursortype();
+		m.lock();
+		gotoXY(20, 3);
+		cout << "  ";
+		SetColor(7);
+		cout << Diem_Mode5;
+		m.unlock();
+		if (Diem_Mode5 >= 3 && demHop_Mode5 == 0)
+		{
+			tao_hop_bi_an_Mode5(toadox_Mode5, toadoy_Mode5, xhop_Mode5, yhop_Mode5, xqua_Mode5, yqua_Mode5);
+			demHop_Mode5++;
+		}
+		//=====backspace
+		m.lock();
+		Xoa_Du_Lieu_Cu_Mode5(toadox_Mode5, toadoy_Mode5);
+		m.unlock();
+		// 0: Ä‘i xuá»‘ng
+		// 1: Ä‘i lÃªn
+		// 2: Ä‘i qua pháº£i
+		// 3: Ä‘i qua trÃ¡i
+		//======= ===dieu khien
+		if (_kbhit())
+		{
+			char kitu = _getch();
+			if (kitu == -32)
+			{
+				kitu = _getch();
+				if (kitu == 72 && check_Mode5 != 0)// di len
+				{
+					check_Mode5 = 1;
+				}
+				if (kitu == 80 && check_Mode5 != 1)// di xuong
+				{
+					check_Mode5 = 0;
+				}
+				if (kitu == 77 && check_Mode5 != 3)// di qua phai
+				{
+					check_Mode5 = 2;
+				}
+				if (kitu == 75 && check_Mode5 != 2)// di qua trai
+				{
+					check_Mode5 = 3;
+				}
+			}
+		}
+
+		if (s_Mode5 == 6 && time6_Mode5 != 0)
+		{
+			if (check_Mode5 == 1)
+			{
+				check_Mode5 = 0;
+			}
+			if (check_Mode5 == 2)
+			{
+				check_Mode5 = 0;
+			}
+			time6_Mode5--;
+		}
+
+		// ========== thá»±c hiá»‡n di chuyá»ƒn
+		if (check_Mode5 == 0)
+		{
+			y_Mode5++;
+			// Ä‘i xuá»‘ng
+		}
+		else if (check_Mode5 == 1)
+		{
+			y_Mode5--;
+			// Ä‘i lÃªn
+		}
+		else if (check_Mode5 == 2)
+		{
+			x_Mode5++;
+			// Ä‘i qua pháº£i
+		}
+		else if (check_Mode5 == 3)
+		{
+			x_Mode5--;
+			// Ä‘i qua trÃ¡i
+		}
+
+		Xu_Li_Ran_Mode5(toadox_Mode5, toadoy_Mode5, x_Mode5, y_Mode5, xqua_Mode5, yqua_Mode5);
+		Xu_Li_Ran_2_Mode5(toadox_Mode5, toadoy_Mode5, xqua_Mode5, yqua_Mode5, xhop_Mode5, yhop_Mode5);
+		if (s_Mode5 == 5 && time5_Mode5 != 0)
+		{
+			m.lock();
+			ran_di_xuyen_vat_can_Mode5(toadox_Mode5, toadoy_Mode5, x_Mode5, y_Mode5);
+			time5_Mode5--;
+			SetColor(10);
+			Ve_Vat_Can1_Mode5();
+			Ve_Vat_Can2_Mode5();
+			SetColor(mauRan_Mode5);
+			m.unlock();
+		}
+		else
+		{
+			// ============ kiem tra =========
+			gameover_Mode5 = kt_ran_Mode5(toadox_Mode5, toadoy_Mode5);
+		}
+
+		if ((Diem_Mode5 > 3 && Diem_Mode5 < 10) && modeSpeed_Mode5 == 0)
+		{
+			speed_Mode5 = 90;
+			modeSpeed_Mode5 = 1;
+		}
+		if (Diem_Mode5 > 10)
+		{
+			speed_Mode5 = 60;
+		}
+		Ham_Toc_Do_Cua_Ran_Mode5(speed_Mode5);
+	}
+
+	// thong bao ket thuc tro choi
+
+}
+void Ve_Tuong_Tren_Mode5()
+{
+	int x = 10, y = 4;
+	while (x <= 100)
+	{
+		gotoXY(x, y);
+		cout << (char)31;
+		x++;
+	}
+}
+void Ve_Tuong_Duoi_Mode5()
+{
+	int x = 10, y = 30;
+	while (x <= 100)
+	{
+		gotoXY(x, y);
+		cout << (char)30;
+		x++;
+	}
+}
+void Ve_Tuong_Trai_Mode5()
+{
+	int x = 10, y = 4;
+	while (y <= 30)
+	{
+		gotoXY(x, y);
+		cout << (char)16;
+		y++;
+	}
+}
+void Ve_Tuong_Phai_Mode5()
+{
+	int x = 100, y = 4;
+	while (y <= 30)
+	{
+		gotoXY(x, y);
+		cout << (char)17;
+		y++;
+	}
+}
+void Ve_Vat_Can1_Mode5()
+{
+	int x = 30, y = 16;
+	while (x <= 80)
+	{
+		gotoXY(x, y);
+		cout << "X";
+		x++;
+	}
+}
+void Ve_Vat_Can2_Mode5()
+{
+	int x = 30, y = 19;
+	while (x <= 80)
+	{
+		gotoXY(x, y);
+		cout << "X";
+		x++;
+	}
+}
+void Ve_Tuong_Mode5()
+{
+	SetColor(8);
+	Ve_Tuong_Tren_Mode5();
+	Ve_Tuong_Duoi_Mode5();
+	Ve_Tuong_Trai_Mode5();
+	Ve_Tuong_Phai_Mode5();
+	SetColor(10);
+	Ve_Vat_Can1_Mode5();
+	Ve_Vat_Can2_Mode5();
+	SetColor(mauRan_Mode5);
+}
+void Khoi_tao_ran_Mode5(int toadox[], int toadoy[])
+{
+	int x = 50, y = 15;
+	for (int i = 0; i < sl_Mode5; i++)
+	{
+		toadox[i] = x;
+		toadoy[i] = y;
+		x--;
+	}
+}
+void Ve_Ran_Mode5(int toadox[], int todoy[])
+{
+	SetColor(7);
+	for (int i = 0; i < sl_Mode5; i++)
+	{
+		gotoXY(toadox[i], todoy[i]);
+		if (i == 0)
+		{
+			cout << char(2);
+		}
+		else
+		{
+			cout << "o";
+		}
+	}
+}
+void Xoa_Du_Lieu_Cu_Mode5(int toadox[], int todoy[])
+{
+	for (int i = 0; i < sl_Mode5; i++)
+	{
+		gotoXY(toadox[i], todoy[i]);
+		cout << " ";
+	}
+}
+void Xu_Li_Ran_Mode5(int toadox[], int toadoy[], int x, int y, int &xqua, int &yqua)
+{
+	m.lock();
+	// b1: thÃªm toáº¡ Ä‘á»™ má»›i vÃ o Ä‘áº©u máº£ng
+	them_Mode5(toadox, x);
+	them_Mode5(toadoy, y);
+	if (kt_ran_an_qua_Mode5(xqua, yqua, toadox[0], toadoy[0]) == false)
+	{
+		// b2: xoÃ¡ toáº¡ Ä‘á»™ cuá»‘i
+		xoa_Mode5(toadox, sl_Mode5 - 1);
+		xoa_Mode5(toadoy, sl_Mode5 - 1);
+		timeSinhTon_Mode5--;
+	}
+	else if (kt_ran_an_qua_Mode5(xqua, yqua, toadox[0], toadoy[0]) == true)
+	{
+		sl_Mode5--;
+		tao_qua_Mode5(xqua, yqua, toadox, toadoy);
+		Diem_Mode5++;
+	}
+
+	// b3: váº½ ráº¯n
+
+	Ve_Ran_Mode5(toadox, toadoy);
+	m.unlock();
+}
+void them_Mode5(int a[], int x)
+{
+	for (int i = sl_Mode5; i > 0; i--)
+	{
+		a[i] = a[i - 1];
+	}
+	a[0] = x;
+	sl_Mode5++;
+}
+void xoa_Mode5(int a[], int vt)
+{
+	for (int i = vt; i < sl_Mode5; i++)
+	{
+		a[i] = a[i + 1];
+	}
+	sl_Mode5--;
+}
+bool kt_ran_cham_tuong_Mode5(int x0, int y0)
+{
+	// ráº¯n cháº¡m tÆ°á»ng trÃªn
+	if (y0 == 4 && (x0 >= 10 && x0 <= 100))
+	{
+		return true; //gameover
+	}
+	// ráº¯n cháº¡m tÆ°á»ng dÆ°á»›i
+	if (y0 == 30 && (x0 >= 10 && x0 <= 100))
+	{
+		return true; //gameover
+	}
+	// ráº¯n cháº¡m tÆ°á»ng trÃ¡i
+	if (x0 == 1 && (y0 >= 4 && y0 <= 30))
+	{
+		return true;//gameover
+	}
+	// ráº¯n cháº¡m tÆ°á»ng pháº£i
+	if (x0 == 100 && (y0 >= 4 && y0 <= 30))
+	{
+		return true; //gameover
+	}
+	return false;
+}
+bool kt_ran_can_duoi_Mode5(int toadox[], int toadoy[])
+{
+	for (int i = 1; i < sl_Mode5; i++)
+	{
+		if (toadox[0] == toadox[i] && toadoy[0] == toadoy[i])
+		{
+			return true;//gameover
+		}
+	}
+	return false;
+}
+bool kt_ran_cham_vat_can_Mode5(int x0, int y0)
+{
+	if ((x0 >= 30 && x0 <= 80) && y0 == 16)
+	{
+		return true;
+	}
+	if ((x0 >= 30 && x0 <= 80) && y0 == 19)
+	{
+		return true;
+	}
+	return false;
+}
+bool kt_ran_Mode5(int toadox[], int toadoy[])
+{
+	bool kt1 = kt_ran_can_duoi_Mode5(toadox, toadoy);
+	bool kt2 = kt_ran_cham_tuong_Mode5(toadox[0], toadoy[0]);
+	bool kt3 = kt_ran_cham_vat_can_Mode5(toadox[0], toadoy[0]);
+	if (kt1 == true || kt2 == true || kt3 == true)
+	{
+		return true; //gameover
+	}
+	return false;
+}
+void tao_qua_Mode5(int &xqua_Mode5, int &yqua_Mode5, int toadox_Mode5[], int toadoy_Mode5[])
+{
+	do
+	{
+		// 11 <= xqua <= 99
+		xqua_Mode5 = rand() % (99 - 11 + 1) + 11;
+		// 2<= yqua <=25
+		yqua_Mode5 = rand() % (29 - 5 + 1) + 5;
+	} while ((kt_ran_de_qua_Mode5(toadox_Mode5, toadoy_Mode5, xqua_Mode5, yqua_Mode5) == true) || (kt_vat_can_de_qua_Mode5(xqua_Mode5, yqua_Mode5) == true) || kt_ret_de_qua_Mode5(xqua_Mode5, yqua_Mode5) == true);
+	int i = rand() % (15 - 1 + 1) + 1;
+	SetColor(i);
+	gotoXY(xqua_Mode5, yqua_Mode5);
+	cout << "$";
+	SetColor(mauRan_Mode5); // mau trang
+}
+bool kt_ran_de_qua_Mode5(int toadox[], int toadoy[], int xqua, int yqua)
+{
+	for (int i = 0; i < sl_Mode5; i++)
+	{
+		if (xqua == toadox[i] && yqua == toadoy[i])
+		{
+			return true;
+		}
+	}
+	return false;
+}
+bool kt_vat_can_de_qua_Mode5(int xqua, int yqua)
+{
+	// vat can 1
+	if ((xqua >= 30 && xqua <= 80) && yqua == 16)
+	{
+		return true;
+	}
+	// vat can 2
+	if ((xqua >= 30 && xqua <= 80) && yqua == 19)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+bool kt_ran_an_qua_Mode5(int xqua, int yqua, int x0, int y0)
+{
+	if (x0 == xqua && y0 == yqua)
+	{
+		return true; // ráº¯n Äƒn quáº£
+	}
+	return false;
+}
+
+// hom bi an
+bool kt_ran_de_hop_Mode5(int toadox[], int toadoy[], int xhop, int yhop)
+{
+	for (int i = 0; i < sl_Mode5; i++)
+	{
+		if (xhop == toadox[i] && yhop == toadoy[i])
+		{
+			return true;
+		}
+	}
+	return false;
+}
+bool kt_qua_de_hop_Mode5(int xhop, int yhop, int xqua, int yqua)
+{
+	if (xhop == xqua && yhop == yqua)
+	{
+		return true;
+	}
+	return false;
+}
+bool kt_vat_can_de_hop_Mode5(int xhop, int yhop)
+{
+	// vat can 1
+	if ((xhop >= 30 && xhop <= 80) && (yhop >= 16 && yhop <= 17))
+	{
+		return true;
+	}
+	// vat can 2
+	if ((xhop >= 30 && xhop <= 80) && (yhop <= 19 && yhop >= 18))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+void tao_hop_bi_an_Mode5(int toadox_Mode5[], int toadoy_Mode5[], int &xhop_Mode5, int &yhop_Mode5, int &xqua_Mode5, int &yqua_Mode5)
+{
+	do
+	{
+		// 11 <= xqua <= 99
+		xhop_Mode5 = rand() % (87 - 23 + 1) + 23;
+		// 2<= yqua <=25
+		yhop_Mode5 = rand() % (29 - 5 + 1) + 5;
+	} while (kt_qua_de_hop_Mode5(xhop_Mode5, yhop_Mode5, xqua_Mode5, yqua_Mode5) == true || kt_ran_de_hop_Mode5(toadox_Mode5, toadoy_Mode5, xhop_Mode5, yhop_Mode5) == true || kt_vat_can_de_hop_Mode5(xhop_Mode5, yhop_Mode5) == true || kt_ret_de_hop_Mode5(xhop_Mode5, yhop_Mode5) == true);
+	SetColor(14);
+	gotoXY(xhop_Mode5, yhop_Mode5);
+	cout << "?";
+	SetColor(mauRan_Mode5); // mau trang
+}
+bool kt_ran_an_hop_Mode5(int xhop, int yhop, int x0, int y0)
+{
+	if (x0 == xhop && y0 == yhop)
+	{
+		return true; // ráº¯n Äƒn quáº£
+	}
+	return false;
+}
+void Xu_Li_Ran_2_Mode5(int toadox_Mode5[], int toadoy_Mode5[], int &xqua_Mode5, int &yqua_Mode5, int &xhop_Mode5, int &yhop_Mode5)
+{
+
+	if (kt_ran_an_hop_Mode5(xhop_Mode5, yhop_Mode5, toadox_Mode5[0], toadoy_Mode5[0]) == true)
+	{
+		s_Mode5 = rand() % (6 - 1 + 1) + 1;
+		if (s_Mode5 == 1)
+		{
+			gotoXY(40, 3);
+			cout << "Toc do tang";
+			speed_Mode5 = 20;
+			time1_Mode5 = 40;
+
+		}
+		else if (s_Mode5 == 2)
+		{
+			gotoXY(40, 3);
+			cout << "Toc do giam";
+			speed_Mode5 = speed_Mode5 * 2;
+			time1_Mode5 = 20;
+		}
+		else if (s_Mode5 == 3)
+		{
+			gotoXY(40, 3);
+			cout << "Tang dot";
+			sl_Mode5++;
+			time1_Mode5 = 20;
+		}
+		else if (s_Mode5 == 4)
+		{
+			gotoXY(40, 3);
+			cout << "Giam diem";
+			Diem_Mode5--;
+			time1_Mode5 = 20;
+		}
+		else if (s_Mode5 == 5)
+		{
+			gotoXY(40, 3);
+			cout << "Di xuyen vat can";
+			time1_Mode5 = 70;
+			time5_Mode5 = 70;
+		}
+		else if (s_Mode5 == 6)
+		{
+			gotoXY(40, 3);
+			cout << "Trung Doc";
+			time1_Mode5 = 50;
+			time6_Mode5 = 50;
+			mauRan_Mode5 = 5;
+		}
+		tao_hop_bi_an_Mode5(toadox_Mode5, toadoy_Mode5, xhop_Mode5, yhop_Mode5, xqua_Mode5, yqua_Mode5);
+
+	}
+	else if (kt_ran_an_hop_Mode5(xhop_Mode5, yhop_Mode5, toadox_Mode5[0], toadoy_Mode5[0]) == false)
+	{
+		time1_Mode5--;
+		if (time1_Mode5 == 0)
+		{
+			mauRan_Mode5 = 7;
+			speed_Mode5 = 90;
+			Xoa_Du_Lieu_Cu_2_Mode5(40, 3);
+		}
+	}
+}
+void Xoa_Du_Lieu_Cu_2_Mode5(int toadox, int todoy)
+{
+	gotoXY(toadox, todoy);
+	cout << "                  ";
+}
+void Ham_Toc_Do_Cua_Ran_Mode5(int speed)
+{
+	if (check_Mode5 == 2)
+	{
+		Sleep(speed);
+	}
+	else if (check_Mode5 == 3)
+	{
+		Sleep(speed);
+	}
+	else if (check_Mode5 == 0)
+	{
+		Sleep(speed * 2);
+	}
+	else if (check_Mode5 == 1)
+	{
+		Sleep(speed * 2);
+	}
+}
+void ran_di_xuyen_vat_can_Mode5(int toadox[], int toadoy[], int &x, int &y)
+{
+	// vat can 1
+	if ((toadox[0] >= 30 && toadoy[0] <= 80) && toadoy[0] == 16)
+	{
+		//cham tu ngoai vao
+		if ((toadox[1] >= 30 && toadox[1] <= 80) && toadoy[1] == 15)
+		{
+			SetColor(12);
+			gotoXY(toadox[0], toadoy[0]);
+			cout << "X";
+			SetColor(mauRan_Mode5);
+			x = toadox[0];
+			y = 16;
+		}
+		// cham tu trong ra	
+		if ((toadox[1] >= 30 && toadox[1] <= 80) && toadoy[1] == 17)
+		{
+			SetColor(12);
+			gotoXY(toadox[0], toadoy[0]);
+			cout << "X";
+			SetColor(mauRan_Mode5);
+			x = toadox[0];
+			y = 16;
+		}
+	}
+	// vat can 2
+	if ((toadox[0] >= 30 && toadoy[0] <= 80) && toadoy[0] == 19)
+	{
+		//cham tu ngoai vao
+		if ((toadox[1] >= 30 && toadox[1] <= 80) && toadoy[1] == 20)
+		{
+			SetColor(12);
+			gotoXY(toadox[0], toadoy[0]);
+			cout << "X";
+			SetColor(mauRan_Mode5);
+			x = toadox[0];
+			y = 19;
+		}
+		// cham tu trong ra	
+		if ((toadox[1] >= 30 && toadox[1] <= 80) && toadoy[1] == 18)
+		{
+			SetColor(12);
+			gotoXY(toadox[0], toadoy[0]);
+			cout << "X";
+			SetColor(mauRan_Mode5);
+			x = toadox[0];
+			y = 19;
+		}
+	}
+}
+
+// ====================== RET =====================
+void Intro_Ret_Mode5()
+{
+	while (gameover_Mode5 == false)
+	{
+		if (Diem_Mode5 < 0)
+		{
+			break;
+		}
+		//Don_Rac_Ret();
+		m.lock();
+		Xoa_Du_Lieu_Cu_Ret_Mode5(toadoChanTraiX_Mode5, toadoChanTraiY_Mode5);
+		m.unlock();
+		y_ret_Mode5--;
+		Xu_Li_Ret_InTro_Mode5(toadoRetX_Mode5, toadoRetY_Mode5, toadoChanTraiX_Mode5, toadoChanTraiY_Mode5, toadoChanPhaiX_Mode5, toadoChanPhaiY_Mode5, x_ret_Mode5, y_ret_Mode5);
+		xu_li_Ret_Cham_Tuong_inTro_Mode5(toadoRetX_Mode5, toadoRetY_Mode5, toadoChanTraiX_Mode5, toadoChanTraiY_Mode5, toadoChanPhaiX_Mode5, toadoChanPhaiY_Mode5, x_ret_Mode5, y_ret_Mode5);
+
+
+		Sleep(50);
+	}
+}
+
+void Ve_Ret_Mode5(int toadoRetX[], int toadoRetY[], int toadoChanTraiX[], int toadoChanTraiY[], int toadoChanPhaiX[], int toadoChanPhaiY[])
+{
+
+	SetColor(5);
+	for (int i = 0; i < sl_dot_Mode5; i++)
+	{
+		if (i == 0)
+		{
+			gotoXY(toadoRetX[i], toadoRetY[i]);
+			cout << char(153);
+		}
+		else
+		{
+			gotoXY(toadoRetX[i], toadoRetY[i]);
+			cout << "O";
+		}
+		gotoXY(toadoChanTraiX[i], toadoChanTraiY[i]);
+		cout << ">";
+		gotoXY(toadoChanPhaiX[i], toadoChanPhaiY[i]);
+		cout << "<";
+	}
+
+}
+void Khoi_Tao_Ret_Mode5(int toadoRetX[], int toadoRetY[], int toadoChanTraiX[], int toadoChanTraiY[], int toadoChanPhaiX[], int toadoChanPhaiY[])
+{
+	int x_ret = 20, y = 25;
+
+	for (int i = 0; i < sl_dot_Mode5; i++)
+	{
+		toadoRetX[i] = x_ret;
+		toadoRetY[i] = y;
+		toadoChanTraiX[i] = x_ret - 1;
+		toadoChanTraiY[i] = y;
+		toadoChanPhaiX[i] = x_ret + 1;
+		toadoChanPhaiY[i] = y;
+		y++;
+	}
+}
+void Xu_Li_Ret_InTro_Mode5(int toadoRetX[], int toadoRetY[], int toadoChanTraiX[], int toadoChanTraiY[], int toadoChanPhaiX[], int toadoChanPhaiY[], int x_ret, int y)
+{
+	m.lock();
+	// b1: thêm toạ độ mới vào đẩu mảng
+	them_Ret_Mode5(toadoRetX, x_ret);
+	them_Ret_Mode5(toadoRetY, y);
+	them_Ret_Mode5(toadoChanTraiX, x_ret - 1);
+	them_Ret_Mode5(toadoChanTraiY, y);
+	them_Ret_Mode5(toadoChanPhaiX, x_ret + 1);
+	them_Ret_Mode5(toadoChanPhaiY, y);
+
+	// b2: xoá toạ độ cuối
+	xoa_Ret_Mode5(toadoRetX, sl_dot_Mode5 - 1);
+	xoa_Ret_Mode5(toadoRetY, sl_dot_Mode5 - 1);
+	xoa_Ret_Mode5(toadoChanTraiX, sl_dot_Mode5 - 1);
+	xoa_Ret_Mode5(toadoChanTraiY, sl_dot_Mode5 - 1);
+	xoa_Ret_Mode5(toadoChanPhaiX, sl_dot_Mode5 - 1);
+	xoa_Ret_Mode5(toadoChanPhaiY, sl_dot_Mode5 - 1);
+
+	// b3: ve ret
+
+	Ve_Ret_Mode5(toadoRetX, toadoRetY, toadoChanTraiX, toadoChanTraiY, toadoChanPhaiX, toadoChanPhaiY);
+	m.unlock();
+}
+void them_Ret_Mode5(int a[], int x)
+{
+	for (int i = sl_dot_Mode5; i > 0; i--)
+	{
+		a[i] = a[i - 1];
+	}
+	a[0] = x;
+	sl_dot_Mode5++;
+}
+void xoa_Ret_Mode5(int a[], int vt)
+{
+	for (int i = vt; i < sl_dot_Mode5; i++)
+	{
+		a[i] = a[i + 1];
+	}
+	sl_dot_Mode5--;
+}
+void Xoa_Du_Lieu_Cu_Ret_Mode5(int toadoChanTraiX[], int toadoChanTraiY[])
+{
+	for (int i = 0; i < sl_dot_Mode5; i++)
+	{
+		gotoXY(toadoChanTraiX[i], toadoChanTraiY[i]);
+		cout << "   ";
+	}
+}
+void xu_li_Ret_Cham_Tuong_inTro_Mode5(int toadoRetX[], int toadoRetY[], int toadoChanTraiX[], int toadoChanTraiY[], int toadoChanPhaiX[], int toadoChanPhaiY[], int &x_ret, int &y_ret)
+{
+	if (toadoRetY[0] == 5)
+	{
+		y_ret = 30;
+		doiHuongRet = rand() % (2 - 1 + 1) + 1;
+		if (doiHuongRet == 1)
+		{
+			x_ret = 20;
+		}
+		else
+		{
+			x_ret = 90;
+		}
+	}
+}
+void Don_Rac_Ret_Mode5()
+{
+	for (int i = 42; i >= 0; i--)
+	{
+		gotoXY(39, i);
+		cout << "    ";
+	}
+}
+bool kt_ret_de_qua_Mode5(int xqua, int yqua)
+{
+	if ((xqua >= 19 && xqua <= 21) && (yqua >= 5 && yqua <= 29))
+	{
+		return true;
+	}
+	if ((xqua >= 89 && xqua <= 91) && (yqua >= 5 && yqua <= 29))
+	{
+		return true;
+	}
+	return false;
+}
+bool kt_ret_de_hop_Mode5(int xhop, int yhop)
+{
+	if ((xhop >= 19 && xhop <= 21) && (yhop >= 5 && yhop <= 29))
+	{
+		return true;
+	}
+	if ((xhop >= 89 && xhop <= 91) && (yhop >= 5 && yhop <= 29))
+	{
+		return true;
+	}
+	return false;
+}
+bool kt_ret_cham_ran_Mode5(int toadox[], int toadoy[], int toadoRetX[], int toadoRetY[], int toadoChanTraiX[], int toadoChanTraiY[], int toadoChanPhaiX[], int toadoChanPhaiY[])
+{
+	for (int i = 0; i < sl_Mode5; i++)
+	{
+		for (int j = 0; j < sl_dot_Mode5; j++)
+		{
+			if (toadox[i] == toadoRetX[j] && toadoy[i] == toadoRetY[j])
+				return true;
+			if (toadox[i] == toadoChanTraiX[j] && toadoy[i] == toadoChanTraiY[j])
+				return true;
+			if (toadox[i] == toadoChanPhaiX[j] && toadoy[i] == toadoChanPhaiY[j])
+				return true;
+		}
+	}
+	return false;
+}
